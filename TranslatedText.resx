@@ -1,0 +1,963 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="en_cmd_exit" xml:space="preserve">
+    <value>Exiting...</value>
+  </data>
+  <data name="en_cmd_goto_no_args" xml:space="preserve">
+    <value>Scenes list:
+Inventory
+Farm
+Store
+Garden
+Market
+Tree</value>
+  </data>
+  <data name="en_cmd_goto_success" xml:space="preserve">
+    <value>Now at scene "{0}".</value>
+  </data>
+  <data name="en_cmd_goto_unknown_arg" xml:space="preserve">
+    <value>Unknown scene "{0}".</value>
+  </data>
+  <data name="en_cmd_help_show_exit" xml:space="preserve">
+    <value>Command "EXIT":
+  EXIT
+    Exit the game.</value>
+  </data>
+  <data name="en_cmd_help_show_goto" xml:space="preserve">
+    <value>Command "GOTO":
+  GOTO
+    Display all the scenes.
+  GOTO &lt;scene&gt;
+    Go to the specified scene.
+    &lt;scene&gt;: The name or initials of a scene.</value>
+  </data>
+  <data name="en_cmd_help_show_help" xml:space="preserve">
+    <value>Command "HELP":
+  HELP
+    Display the help text.
+  HELP &lt;command&gt;
+    Display the syntax of a command.
+    &lt;command&gt;: A command, use "LIST CMDS" to get commands those can be this argument.</value>
+  </data>
+  <data name="en_cmd_help_show_lang" xml:space="preserve">
+    <value>Command "LANG":
+  LANG
+    Display all available languages.
+  LANG &lt;index&gt;
+    Switch to the specified language.
+    &lt;index&gt;: The index of a language.</value>
+  </data>
+  <data name="en_cmd_help_show_list" xml:space="preserve">
+    <value>Command "LIST":
+  LIST
+    Display all parameters of this command.
+  LIST &lt;list&gt;
+    Display the specified list.
+    &lt;list&gt;: A list parameter.</value>
+  </data>
+  <data name="en_cmd_help_show_load" xml:space="preserve">
+    <value>Command "LOAD":
+  LOAD &lt;path&gt;
+    Read the save from the specified path.
+    &lt;path&gt;: An absolute path strictly pointing to the "TerminalFarm.json" file.</value>
+  </data>
+  <data name="en_cmd_help_show_page" xml:space="preserve">
+    <value>Command "PAGE":
+  PAGE
+    Display the current page of the current scene.
+  PAGE &lt;number&gt;
+    Switch to the specified page of the current scene.
+    &lt;number&gt;: Page number.</value>
+  </data>
+  <data name="en_cmd_help_show_save" xml:space="preserve">
+    <value>Command "SAVE":
+  SAVE
+    Display the current save path.
+  SAVE RESET
+    Reset the save path to default.
+  SAVE &lt;path&gt;
+    Set custom save path.
+    &lt;path&gt;: An absolute path to an existing directory.</value>
+  </data>
+  <data name="en_cmd_help_show_swap" xml:space="preserve">
+    <value>Command "SWAP":
+  SWAP
+    Switch items without index number at the market and apple tree scenes.
+  SWAP &lt;index&gt;
+    Switch item from the specified slot of the current page of the current scene by index.
+    &lt;index&gt;: Index number.</value>
+  </data>
+  <data name="en_cmd_help_text" xml:space="preserve">
+    <value>How to play:
+There is only needing keyboards to play this game.
+To do actions, just type something and press enter to send them to the game like sending messages to people in chatting app.
+Try to send "LIST CMDS" to have a check all the commands you can use, and then you can use "HELP &lt;A Command&gt;" to get the useage about a command one of them.
+To switch languages, send "LANG" to get a list of all supported languages, and send "LANG &lt;the number of one language&gt;" to switch to it.</value>
+  </data>
+  <data name="en_cmd_help_unknown_arg" xml:space="preserve">
+    <value>Command "{0}":
+  Unknown.</value>
+    <comment>0=输入参数</comment>
+  </data>
+  <data name="en_cmd_lang_invalid_language_index" xml:space="preserve">
+    <value>"{0}" is not a valid language index.</value>
+    <comment>0=输入的语言索引</comment>
+  </data>
+  <data name="en_cmd_lang_list_all" xml:space="preserve">
+    <value>Below are all available languages:</value>
+  </data>
+  <data name="en_cmd_lang_switch_to_current_lang" xml:space="preserve">
+    <value>The display language has been switched to English.</value>
+  </data>
+  <data name="en_cmd_list_no_args" xml:space="preserve">
+    <value>Below are all available parameters:
+CMDS
+SCENES</value>
+  </data>
+  <data name="en_cmd_list_show_cmds" xml:space="preserve">
+    <value>Commands list:
+EXIT
+GOTO
+HELP
+LANG
+LIST
+LOAD
+SAVE
+SWAP
+USE</value>
+  </data>
+  <data name="en_cmd_list_show_scenes" xml:space="preserve">
+    <value>Scenes list:
+Inventory
+Farm
+Store
+Garden
+Market
+Tree</value>
+  </data>
+  <data name="en_cmd_list_unknown_arg" xml:space="preserve">
+    <value>Unknown list "{0}".</value>
+    <comment>0=输入的列表</comment>
+  </data>
+  <data name="en_cmd_load_failed" xml:space="preserve">
+    <value>Failed to read the save data from the specified custom save path.</value>
+  </data>
+  <data name="en_cmd_load_input_path_is_invalid" xml:space="preserve">
+    <value>Input is not an absolute path or is illegal.</value>
+  </data>
+  <data name="en_cmd_load_not_save_path" xml:space="preserve">
+    <value>The path is not to a file named "TerminalFarmSave.json".</value>
+  </data>
+  <data name="en_cmd_load_no_args" xml:space="preserve">
+    <value>Missing parameters. If you want to get the current save path please use "SAVE".</value>
+  </data>
+  <data name="en_cmd_load_success" xml:space="preserve">
+    <value>Successfully read the save data from the specified custom save path.</value>
+  </data>
+  <data name="en_cmd_page_out_of_bound" xml:space="preserve">
+    <value>The specified page number "{0}" is out of the bound of the scene.</value>
+    <comment>0=页码数字</comment>
+  </data>
+  <data name="en_cmd_page_text" xml:space="preserve">
+    <value>    [{0}]Lv.{1}/{2}            Money: {3}z</value>
+    <comment>0=场景, 1=当前等级, 2=最高等级, 3=金钱数</comment>
+  </data>
+  <data name="en_cmd_page_text_pages" xml:space="preserve">
+    <value>    Page&lt;{0}&gt;/Total {1}</value>
+    <comment>0=当前页, 1=最高页数</comment>
+  </data>
+  <data name="en_cmd_save_display_the_save_path_using" xml:space="preserve">
+    <value>The current using save path is"{0}".</value>
+    <comment>0=路径</comment>
+  </data>
+  <data name="en_cmd_save_input_path_is_invalid" xml:space="preserve">
+    <value>Input is not an absolute path or is illegal.</value>
+  </data>
+  <data name="en_cmd_save_reset" xml:space="preserve">
+    <value>The save path has been reset to default.</value>
+  </data>
+  <data name="en_cmd_save_success" xml:space="preserve">
+    <value>Success to set the custom save path.</value>
+  </data>
+  <data name="en_cmd_save_target_folder_not_exist" xml:space="preserve">
+    <value>The path is not to an exist directory.</value>
+  </data>
+  <data name="en_cmd_swap_hand_empty" xml:space="preserve">
+    <value>The handing slot must not be empty when use this command during current scene.</value>
+  </data>
+  <data name="en_cmd_swap_hand_not_empty" xml:space="preserve">
+    <value>The handing slot must be empty when use this command during current scene.</value>
+  </data>
+  <data name="en_cmd_swap_index_out_of_bound" xml:space="preserve">
+    <value>The index number is out of bound.</value>
+  </data>
+  <data name="en_cmd_swap_scene_cannot_arg" xml:space="preserve">
+    <value>Current scene does not support this command with parameters.</value>
+  </data>
+  <data name="en_cmd_swap_scene_need_arg" xml:space="preserve">
+    <value>Current scene does not support this command without parameters, please retry with index number.</value>
+  </data>
+  <data name="en_cmd_swap_scene_not_support" xml:space="preserve">
+    <value>Current scene does not support this command.</value>
+  </data>
+  <data name="en_cmd_swap_scene_no_obj" xml:space="preserve">
+    <value>Current scene has no items.</value>
+  </data>
+  <data name="en_cmd_swap_shop_no_money" xml:space="preserve">
+    <value>No enough money.</value>
+  </data>
+  <data name="en_cmd_swap_shop_slot_empty" xml:space="preserve">
+    <value>The slot of index "{0}" is empty.</value>
+    <comment>0=格子索引</comment>
+  </data>
+  <data name="en_cmd_swap_shop_success" xml:space="preserve">
+    <value>Purchased "{0}".</value>
+    <comment>0=物品名</comment>
+  </data>
+  <data name="en_cmd_swap_success_farm" xml:space="preserve">
+    <value>Success to harvest the crop from index "{0}" of farm.</value>
+    <comment>0=格子索引</comment>
+  </data>
+  <data name="en_cmd_swap_success_inventory" xml:space="preserve">
+    <value>Success to swap item with page "{0}" index "{1}" of Inventory.</value>
+    <comment>0=页码, 1=索引</comment>
+  </data>
+  <data name="en_cmd_swap_success_market" xml:space="preserve">
+    <value>Got {0}z.</value>
+    <comment>0=金钱</comment>
+  </data>
+  <data name="en_cmd_swap_success_tree" xml:space="preserve">
+    <value>Collected an apple.</value>
+  </data>
+  <data name="en_cmd_swap_target_cannot_swap" xml:space="preserve">
+    <value>Slot "{0}" cannot swap.</value>
+    <comment>0=格子索引</comment>
+  </data>
+  <data name="en_cmd_use_index_out_of_bound" xml:space="preserve">
+    <value>The index number is out of bound.</value>
+  </data>
+  <data name="en_cmd_use_item_cannot_use" xml:space="preserve">
+    <value>The item current taked cannot be used.</value>
+  </data>
+  <data name="en_cmd_use_need_arg" xml:space="preserve">
+    <value>Missing parameters.</value>
+  </data>
+  <data name="en_cmd_use_scene_is_not_farm" xml:space="preserve">
+    <value>This command can only use in Farm.</value>
+  </data>
+  <data name="en_cmd_use_shovel_air" xml:space="preserve">
+    <value>Cannot clear an empty slot.</value>
+  </data>
+  <data name="en_cmd_use_shovel_success" xml:space="preserve">
+    <value>The slot "{0}" has been cleared.</value>
+    <comment>0=格子</comment>
+  </data>
+  <data name="en_cmd_use_watering" xml:space="preserve">
+    <value>Watering...</value>
+  </data>
+  <data name="en_custom_path_illegal" xml:space="preserve">
+    <value>Failed to use the custom save path because it is not an absolute path or is illegal. Has fallen back to the default.</value>
+  </data>
+  <data name="en_gamesave_null_error" xml:space="preserve">
+    <value>Error. The save data in RAM is null, please try re-load save of re-open the game.</value>
+  </data>
+  <data name="en_game_title" xml:space="preserve">
+    <value>TerminalFarm</value>
+  </data>
+  <data name="en_item_name_air" xml:space="preserve">
+    <value>   </value>
+  </data>
+  <data name="en_item_name_apple" xml:space="preserve">
+    <value>Apple</value>
+  </data>
+  <data name="en_item_name_big_watering_can" xml:space="preserve">
+    <value>BigWateringCan</value>
+  </data>
+  <data name="en_item_name_blueberry" xml:space="preserve">
+    <value>Blueberries</value>
+  </data>
+  <data name="en_item_name_blueberry_plant" xml:space="preserve">
+    <value>BlueberryPlant</value>
+  </data>
+  <data name="en_item_name_blueberry_seed" xml:space="preserve">
+    <value>BlueberrySeed</value>
+  </data>
+  <data name="en_item_name_blueberry_seedling" xml:space="preserve">
+    <value>BlueberrySeedling</value>
+  </data>
+  <data name="en_item_name_blue_flower" xml:space="preserve">
+    <value>BlueFlower</value>
+  </data>
+  <data name="en_item_name_cabbage" xml:space="preserve">
+    <value>Cabbage</value>
+  </data>
+  <data name="en_item_name_cabbage_plant" xml:space="preserve">
+    <value>CabbagePlant</value>
+  </data>
+  <data name="en_item_name_cabbage_seed" xml:space="preserve">
+    <value>CabbageSeed</value>
+  </data>
+  <data name="en_item_name_cabbage_seedling" xml:space="preserve">
+    <value>CabbageSeedling</value>
+  </data>
+  <data name="en_item_name_carrot" xml:space="preserve">
+    <value>Carrot</value>
+  </data>
+  <data name="en_item_name_carrot_plant" xml:space="preserve">
+    <value>CarrotPlant</value>
+  </data>
+  <data name="en_item_name_carrot_seed" xml:space="preserve">
+    <value>CarrotSeed</value>
+  </data>
+  <data name="en_item_name_carrot_sprout" xml:space="preserve">
+    <value>CarrotSprout</value>
+  </data>
+  <data name="en_item_name_consumable_water_pack" xml:space="preserve">
+    <value>WaterBag</value>
+  </data>
+  <data name="en_item_name_cyan_flower" xml:space="preserve">
+    <value>CyanFlower</value>
+  </data>
+  <data name="en_item_name_flower_seed" xml:space="preserve">
+    <value>FlowerSeed</value>
+  </data>
+  <data name="en_item_name_flower_seedling" xml:space="preserve">
+    <value>FlowerSeedling</value>
+  </data>
+  <data name="en_item_name_green_flower" xml:space="preserve">
+    <value>GreenFlower</value>
+  </data>
+  <data name="en_item_name_magenta_flower" xml:space="preserve">
+    <value>MagentaFlower</value>
+  </data>
+  <data name="en_item_name_potato" xml:space="preserve">
+    <value>Potato</value>
+  </data>
+  <data name="en_item_name_potato_plant" xml:space="preserve">
+    <value>PotatoPlant</value>
+  </data>
+  <data name="en_item_name_potato_seed" xml:space="preserve">
+    <value>PotatoSeed</value>
+  </data>
+  <data name="en_item_name_potato_sprout" xml:space="preserve">
+    <value>PotatoSprout</value>
+  </data>
+  <data name="en_item_name_red_flower" xml:space="preserve">
+    <value>RedFlower</value>
+  </data>
+  <data name="en_item_name_shovel" xml:space="preserve">
+    <value>Shovel</value>
+  </data>
+  <data name="en_item_name_store_restock" xml:space="preserve">
+    <value>Restock</value>
+  </data>
+  <data name="en_item_name_strawberry" xml:space="preserve">
+    <value>Strawberries</value>
+  </data>
+  <data name="en_item_name_strawberry_plant" xml:space="preserve">
+    <value>StrawberryPlant</value>
+  </data>
+  <data name="en_item_name_strawberry_seed" xml:space="preserve">
+    <value>StrawberrySeed</value>
+  </data>
+  <data name="en_item_name_strawberry_seedling" xml:space="preserve">
+    <value>StrawberrySeedling</value>
+  </data>
+  <data name="en_item_name_super_watering_can" xml:space="preserve">
+    <value>SuperWateringCan</value>
+  </data>
+  <data name="en_item_name_tomato" xml:space="preserve">
+    <value>Tomato</value>
+  </data>
+  <data name="en_item_name_tomato_plant" xml:space="preserve">
+    <value>TomatoPlant</value>
+  </data>
+  <data name="en_item_name_tomato_seed" xml:space="preserve">
+    <value>TomatoSeed</value>
+  </data>
+  <data name="en_item_name_tomato_seedling" xml:space="preserve">
+    <value>TomatoSeedling</value>
+  </data>
+  <data name="en_item_name_watering_can" xml:space="preserve">
+    <value>WateringCan</value>
+  </data>
+  <data name="en_item_name_yellow_flower" xml:space="preserve">
+    <value>YellowFlower</value>
+  </data>
+  <data name="en_language_name" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="en_market_tomorrow_text" xml:space="preserve">
+    <value>  NextDay </value>
+  </data>
+  <data name="en_scene_name_farm" xml:space="preserve">
+    <value>Farm</value>
+  </data>
+  <data name="en_scene_name_garden" xml:space="preserve">
+    <value>Garden</value>
+  </data>
+  <data name="en_scene_name_inventory" xml:space="preserve">
+    <value>Inventory</value>
+  </data>
+  <data name="en_scene_name_market" xml:space="preserve">
+    <value>Market</value>
+  </data>
+  <data name="en_scene_name_store" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="en_scene_name_tree" xml:space="preserve">
+    <value>AppleTree</value>
+  </data>
+  <data name="en_unknown_cmd" xml:space="preserve">
+    <value>Unknown command "{0}"</value>
+    <comment>0=命令</comment>
+  </data>
+  <data name="en_welcome" xml:space="preserve">
+    <value>Welcome TerminalFarm BV-H{0}! ----BCASoft
+Type and send "HELP" to get start.</value>
+    <comment>0=BV版本号</comment>
+  </data>
+  <data name="zh_cmd_exit" xml:space="preserve">
+    <value>正在退出...</value>
+  </data>
+  <data name="zh_cmd_goto_no_args" xml:space="preserve">
+    <value>场景列表:
+Inventory
+Farm
+Store
+Garden
+Market
+Tree</value>
+  </data>
+  <data name="zh_cmd_goto_success" xml:space="preserve">
+    <value>已前往场景"{0}".</value>
+  </data>
+  <data name="zh_cmd_goto_unknown_arg" xml:space="preserve">
+    <value>不存在的场景"{0}".</value>
+  </data>
+  <data name="zh_cmd_help_show_exit" xml:space="preserve">
+    <value>命令"EXIT":
+  EXIT
+    退出游戏.</value>
+  </data>
+  <data name="zh_cmd_help_show_goto" xml:space="preserve">
+    <value>命令"GOTO":
+  GOTO
+    显示所有场景.
+  GOTO &lt;scene&gt;
+    前往指定场景.
+    &lt;scene&gt;: 一个场景的名称或首字母.</value>
+  </data>
+  <data name="zh_cmd_help_show_help" xml:space="preserve">
+    <value>命令"HELP":
+  HELP
+    显示帮助信息.
+  HELP &lt;command&gt;
+    显示一条命令的语法.
+    &lt;command&gt;: 一条命令，可使用"LIST CMDS"获取可用作此参数的命令.</value>
+  </data>
+  <data name="zh_cmd_help_show_lang" xml:space="preserve">
+    <value>命令"LANG":
+  LANG
+    显示所有可用语言.
+  LANG &lt;index&gt;
+    切换到指定语言.
+    &lt;index&gt;: 一个语言的索引.</value>
+  </data>
+  <data name="zh_cmd_help_show_list" xml:space="preserve">
+    <value>命令"LIST":
+  LIST
+    显示所有列表参数.
+  LIST &lt;list&gt;
+    显示指定列表.
+    &lt;list&gt;: 一个列表参数.</value>
+  </data>
+  <data name="zh_cmd_help_show_load" xml:space="preserve">
+    <value>命令"LOAD":
+  LOAD &lt;path&gt;
+    从指定路径读取存档.
+    &lt;path&gt;: 一个严格指向"TerminalFarm.json"文件的绝对路径.</value>
+  </data>
+  <data name="zh_cmd_help_show_page" xml:space="preserve">
+    <value>命令"PAGE":
+  PAGE
+    显示当前场景的当前页面.
+  PAGE &lt;number&gt;
+    切换至当前场景的指定页面.
+    &lt;number&gt;: 页码.</value>
+  </data>
+  <data name="zh_cmd_help_show_save" xml:space="preserve">
+    <value>命令"SAVE":
+  SAVE
+    显示当前存档保存路径.
+  SAVE RESET
+    重置存档保存路径为默认路径.
+  SAVE &lt;path&gt;
+    设定自定义存档保存路径.
+    &lt;path&gt;: 一个指向已存在目录的绝对路径.</value>
+  </data>
+  <data name="zh_cmd_help_show_swap" xml:space="preserve">
+    <value>命令"SWAP":
+  SWAP
+    在市场和苹果树场景中不使用索引数交换物品.
+  SWAP &lt;index&gt;
+    与当前场景的当前页面上由索引指定的格子交换物品.
+    &lt;index&gt;: 索引序号.</value>
+  </data>
+  <data name="zh_cmd_help_show_use" xml:space="preserve">
+    <value>命令"USE":
+  USE &lt;index&gt;
+    将手持物品使用在当前场景的当前页面上由索引指定的格子.
+    &lt;index&gt;: 索引序号.</value>
+  </data>
+  <data name="zh_cmd_help_text" xml:space="preserve">
+    <value>如何游玩:
+这个游戏只需要使用键盘.
+只需要输入文本然后按回车发送给游戏就可以进行操作, 就像在聊天软件里给人发消息一样.
+试着发送"LIST CMDS"来查看所有你能使用的命令, 然后你可以发送"HELP &lt;命令&gt;"来获取其中一条命令的用法.
+想切换语言的话, 发送"LANG"以获得显示所有支持的语言的列表, 然后发送"LANG &lt;一个语言的序号&gt;"来切换到该语言.</value>
+  </data>
+  <data name="zh_cmd_help_unknown_arg" xml:space="preserve">
+    <value>命令"{0}":
+  不存在.</value>
+    <comment>0=输入参数</comment>
+  </data>
+  <data name="zh_cmd_lang_invalid_language_index" xml:space="preserve">
+    <value>"{0}"不是一个可用的语言索引.</value>
+    <comment>0=输入的语言索引</comment>
+  </data>
+  <data name="zh_cmd_lang_list_all" xml:space="preserve">
+    <value>所有可用的语言如下:</value>
+  </data>
+  <data name="zh_cmd_lang_switch_to_current_lang" xml:space="preserve">
+    <value>显示语言已切换至中文.</value>
+  </data>
+  <data name="zh_cmd_list_no_args" xml:space="preserve">
+    <value>以下是可用的参数:
+CMDS
+SCENES</value>
+  </data>
+  <data name="zh_cmd_list_show_cmds" xml:space="preserve">
+    <value>命令列表:
+EXIT
+GOTO
+HELP
+LANG
+LIST
+LOAD
+SAVE
+SWAP
+USE</value>
+  </data>
+  <data name="zh_cmd_list_show_scenes" xml:space="preserve">
+    <value>场景列表:
+Inventory
+Farm
+Store
+Garden
+Market
+Tree</value>
+  </data>
+  <data name="zh_cmd_list_unknown_arg" xml:space="preserve">
+    <value>不存在的列表"{0}".</value>
+    <comment>0=输入的列表</comment>
+  </data>
+  <data name="zh_cmd_load_failed" xml:space="preserve">
+    <value>从指定的自定义存档路径读取存档失败.</value>
+  </data>
+  <data name="zh_cmd_load_input_path_is_invalid" xml:space="preserve">
+    <value>输入不合法或不是绝对路径.</value>
+  </data>
+  <data name="zh_cmd_load_not_save_path" xml:space="preserve">
+    <value>该路径指向不是一个"TerminalFarmSave.json"文件.</value>
+  </data>
+  <data name="zh_cmd_load_no_args" xml:space="preserve">
+    <value>缺少参数。如果你想查看当前的保存路径请使用"SAVE".</value>
+  </data>
+  <data name="zh_cmd_load_success" xml:space="preserve">
+    <value>成功从指定的自定义存档路径读取存档.</value>
+  </data>
+  <data name="zh_cmd_page_out_of_bound" xml:space="preserve">
+    <value>指定的页码"{0}"超出场景范围.</value>
+    <comment>0=页码数字</comment>
+  </data>
+  <data name="zh_cmd_page_text" xml:space="preserve">
+    <value>  [{0}]等级{1}/{2}        资金: {3}z</value>
+    <comment>0=场景, 1=当前等级, 2=最高等级, 3=金钱数</comment>
+  </data>
+  <data name="zh_cmd_page_text_pages" xml:space="preserve">
+    <value>  第&lt;{0}&gt;/{1}页</value>
+    <comment>0=当前页, 1=最高页数</comment>
+  </data>
+  <data name="zh_cmd_save_display_the_save_path_using" xml:space="preserve">
+    <value>当前使用的存档路径为"{0}".</value>
+    <comment>0=路径</comment>
+  </data>
+  <data name="zh_cmd_save_input_path_is_invalid" xml:space="preserve">
+    <value>输入不合法或不是绝对路径.</value>
+  </data>
+  <data name="zh_cmd_save_reset" xml:space="preserve">
+    <value>已重置存档路径为默认路径.</value>
+  </data>
+  <data name="zh_cmd_save_success" xml:space="preserve">
+    <value>已设置自定义存档路径.</value>
+  </data>
+  <data name="zh_cmd_save_target_folder_not_exist" xml:space="preserve">
+    <value>该路径指向不是一个已存在的目录.</value>
+  </data>
+  <data name="zh_cmd_swap_hand_empty" xml:space="preserve">
+    <value>当前场景使用此命令必须手持槽不为空.</value>
+  </data>
+  <data name="zh_cmd_swap_hand_not_empty" xml:space="preserve">
+    <value>当前场景使用此命令必须手持槽为空.</value>
+  </data>
+  <data name="zh_cmd_swap_index_out_of_bound" xml:space="preserve">
+    <value>索引序号超出范围.</value>
+  </data>
+  <data name="zh_cmd_swap_scene_cannot_arg" xml:space="preserve">
+    <value>当前场景的此命令不可跟随参数.</value>
+  </data>
+  <data name="zh_cmd_swap_scene_need_arg" xml:space="preserve">
+    <value>当前场景不支持不带参数使用此命令，请伴随索引序号使用.</value>
+  </data>
+  <data name="zh_cmd_swap_scene_not_support" xml:space="preserve">
+    <value>当前场景不支持此命令.</value>
+  </data>
+  <data name="zh_cmd_swap_scene_no_obj" xml:space="preserve">
+    <value>当前场景没有对象可用.</value>
+  </data>
+  <data name="zh_cmd_swap_shop_no_money" xml:space="preserve">
+    <value>资金不足.</value>
+  </data>
+  <data name="zh_cmd_swap_shop_slot_empty" xml:space="preserve">
+    <value>索引"{0}"格子是空的.</value>
+    <comment>0=格子索引</comment>
+  </data>
+  <data name="zh_cmd_swap_shop_success" xml:space="preserve">
+    <value>已购买"{0}".</value>
+    <comment>0=物品名</comment>
+  </data>
+  <data name="zh_cmd_swap_success_farm" xml:space="preserve">
+    <value>成功从农场索引"{0}"格子收获作物.</value>
+    <comment>0=格子索引</comment>
+  </data>
+  <data name="zh_cmd_swap_success_inventory" xml:space="preserve">
+    <value>成功从仓库第"{0}"页索引"{1}"格子交换物品.</value>
+    <comment>0=页码, 1=索引</comment>
+  </data>
+  <data name="zh_cmd_swap_success_market" xml:space="preserve">
+    <value>已赚取{0}z.</value>
+    <comment>0=金钱</comment>
+  </data>
+  <data name="zh_cmd_swap_success_tree" xml:space="preserve">
+    <value>收取了一个苹果.</value>
+  </data>
+  <data name="zh_cmd_swap_target_cannot_swap" xml:space="preserve">
+    <value>格子"{0}"不可交换.</value>
+    <comment>0=格子索引</comment>
+  </data>
+  <data name="zh_cmd_use_index_out_of_bound" xml:space="preserve">
+    <value>索引序号超出范围.</value>
+  </data>
+  <data name="zh_cmd_use_item_cannot_use" xml:space="preserve">
+    <value>当前持有的物品不可使用.</value>
+  </data>
+  <data name="zh_cmd_use_need_arg" xml:space="preserve">
+    <value>缺少参数.</value>
+  </data>
+  <data name="zh_cmd_use_scene_is_not_farm" xml:space="preserve">
+    <value>此命令仅可在农田中使用.</value>
+  </data>
+  <data name="zh_cmd_use_shovel_air" xml:space="preserve">
+    <value>不能铲除空格子.</value>
+  </data>
+  <data name="zh_cmd_use_shovel_success" xml:space="preserve">
+    <value>已铲除格子"{0}".</value>
+    <comment>0=格子</comment>
+  </data>
+  <data name="zh_cmd_use_watering" xml:space="preserve">
+    <value>浇水中...</value>
+  </data>
+  <data name="zh_custom_path_illegal" xml:space="preserve">
+    <value>无法使用自定义存档路径，其不是绝对路径或不合法，已回退到默认路径.</value>
+  </data>
+  <data name="zh_gamesave_null_error" xml:space="preserve">
+    <value>发生错误，内存中存档数据为空类型，请尝试重新读取存档或重启游戏.</value>
+  </data>
+  <data name="zh_game_title" xml:space="preserve">
+    <value>终端农场</value>
+  </data>
+  <data name="zh_item_name_air" xml:space="preserve">
+    <value>   </value>
+  </data>
+  <data name="zh_item_name_apple" xml:space="preserve">
+    <value>苹果</value>
+  </data>
+  <data name="zh_item_name_big_watering_can" xml:space="preserve">
+    <value>大号水壶</value>
+  </data>
+  <data name="zh_item_name_blueberry" xml:space="preserve">
+    <value>蓝莓</value>
+  </data>
+  <data name="zh_item_name_blueberry_plant" xml:space="preserve">
+    <value>蓝莓植株</value>
+  </data>
+  <data name="zh_item_name_blueberry_seed" xml:space="preserve">
+    <value>蓝莓种子</value>
+  </data>
+  <data name="zh_item_name_blueberry_seedling" xml:space="preserve">
+    <value>蓝莓幼苗</value>
+  </data>
+  <data name="zh_item_name_blue_flower" xml:space="preserve">
+    <value>蓝花</value>
+  </data>
+  <data name="zh_item_name_cabbage" xml:space="preserve">
+    <value>卷心菜</value>
+  </data>
+  <data name="zh_item_name_cabbage_plant" xml:space="preserve">
+    <value>卷心菜植株</value>
+  </data>
+  <data name="zh_item_name_cabbage_seed" xml:space="preserve">
+    <value>卷心菜种子</value>
+  </data>
+  <data name="zh_item_name_cabbage_seedling" xml:space="preserve">
+    <value>卷心菜幼苗</value>
+  </data>
+  <data name="zh_item_name_carrot" xml:space="preserve">
+    <value>胡萝卜</value>
+  </data>
+  <data name="zh_item_name_carrot_plant" xml:space="preserve">
+    <value>胡萝卜植株</value>
+  </data>
+  <data name="zh_item_name_carrot_seed" xml:space="preserve">
+    <value>胡萝卜种子</value>
+  </data>
+  <data name="zh_item_name_carrot_sprout" xml:space="preserve">
+    <value>胡萝卜幼芽</value>
+  </data>
+  <data name="zh_item_name_consumable_water_pack" xml:space="preserve">
+    <value>一次性浇水包</value>
+  </data>
+  <data name="zh_item_name_cyan_flower" xml:space="preserve">
+    <value>青花</value>
+  </data>
+  <data name="zh_item_name_flower_seed" xml:space="preserve">
+    <value>花种</value>
+  </data>
+  <data name="zh_item_name_flower_seedling" xml:space="preserve">
+    <value>花苗</value>
+  </data>
+  <data name="zh_item_name_green_flower" xml:space="preserve">
+    <value>绿花</value>
+  </data>
+  <data name="zh_item_name_magenta_flower" xml:space="preserve">
+    <value>紫花</value>
+  </data>
+  <data name="zh_item_name_potato" xml:space="preserve">
+    <value>马铃薯</value>
+  </data>
+  <data name="zh_item_name_potato_plant" xml:space="preserve">
+    <value>马铃薯植株</value>
+  </data>
+  <data name="zh_item_name_potato_seed" xml:space="preserve">
+    <value>马铃薯种子</value>
+  </data>
+  <data name="zh_item_name_potato_sprout" xml:space="preserve">
+    <value>马铃薯幼芽</value>
+  </data>
+  <data name="zh_item_name_red_flower" xml:space="preserve">
+    <value>红花</value>
+  </data>
+  <data name="zh_item_name_shovel" xml:space="preserve">
+    <value>铲子</value>
+  </data>
+  <data name="zh_item_name_store_restock" xml:space="preserve">
+    <value>重新上架商品</value>
+  </data>
+  <data name="zh_item_name_strawberry" xml:space="preserve">
+    <value>草莓</value>
+  </data>
+  <data name="zh_item_name_strawberry_plant" xml:space="preserve">
+    <value>草莓植株</value>
+  </data>
+  <data name="zh_item_name_strawberry_seed" xml:space="preserve">
+    <value>草莓种子</value>
+  </data>
+  <data name="zh_item_name_strawberry_seedling" xml:space="preserve">
+    <value>草莓幼苗</value>
+  </data>
+  <data name="zh_item_name_super_watering_can" xml:space="preserve">
+    <value>超级水壶</value>
+  </data>
+  <data name="zh_item_name_tomato" xml:space="preserve">
+    <value>西红柿</value>
+  </data>
+  <data name="zh_item_name_tomato_plant" xml:space="preserve">
+    <value>西红柿植株</value>
+  </data>
+  <data name="zh_item_name_tomato_seed" xml:space="preserve">
+    <value>西红柿种子</value>
+  </data>
+  <data name="zh_item_name_tomato_seedling" xml:space="preserve">
+    <value>西红柿幼苗</value>
+  </data>
+  <data name="zh_item_name_watering_can" xml:space="preserve">
+    <value>浇水壶</value>
+  </data>
+  <data name="zh_item_name_yellow_flower" xml:space="preserve">
+    <value>黄花</value>
+  </data>
+  <data name="zh_language_name" xml:space="preserve">
+    <value>中文</value>
+  </data>
+  <data name="zh_market_tomorrow_text" xml:space="preserve">
+    <value>  明日 </value>
+  </data>
+  <data name="zh_scene_name_farm" xml:space="preserve">
+    <value>农田</value>
+  </data>
+  <data name="zh_scene_name_garden" xml:space="preserve">
+    <value>花园</value>
+  </data>
+  <data name="zh_scene_name_inventory" xml:space="preserve">
+    <value>仓库</value>
+  </data>
+  <data name="zh_scene_name_market" xml:space="preserve">
+    <value>市场</value>
+  </data>
+  <data name="zh_scene_name_store" xml:space="preserve">
+    <value>商店</value>
+  </data>
+  <data name="zh_scene_name_tree" xml:space="preserve">
+    <value>苹果树</value>
+  </data>
+  <data name="zh_unknown_cmd" xml:space="preserve">
+    <value>未知的命令"{0}"</value>
+    <comment>0=命令</comment>
+  </data>
+  <data name="zh_welcome" xml:space="preserve">
+    <value>欢迎 终端农场 BV-H{0}! ——BCASoft
+输入并发送"HELP"以启程.</value>
+    <comment>0=BV版本号</comment>
+  </data>
+  <data name="_debug" xml:space="preserve">
+    <value>Hello {0} This is a debug text for TerminalFarm.</value>
+  </data>
+</root>

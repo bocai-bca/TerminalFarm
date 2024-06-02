@@ -1,0 +1,60 @@
+﻿{
+	"UseLanguage": 0,
+	"CustomPath": "",
+	"Money": 0,
+	"TakingItemID": 0,
+	"ScenesData": [
+		{
+			"UpgradedTimes": 0,
+			"Slots": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			]
+		},
+		{
+			"UpgradedTimes": 0,
+			"Slots": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			]
+		},
+		{
+			"UpgradedTimes": 0,
+			"LastUpdateTime": "",
+			"Slots": [
+				{},
+				{},
+				{},
+				{},
+				{}
+			]
+		},
+		{
+			"UpgradedTimes": 0,
+			"Slots": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			]
+		},
+		{
+			"UpgradedTimes": 0
+		},
+		{
+			"UpgradedTimes": 0,
+			"AppleCollected": 0,
+			"LastTimeGotApple": ""
+		}
+	]
+}
