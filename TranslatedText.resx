@@ -204,6 +204,11 @@ Tree</value>
     Switch item from the specified slot of the current page of the current scene by index.
     &lt;index&gt;: Index number.</value>
   </data>
+  <data name="en_cmd_help_show_upgrade" xml:space="preserve">
+    <value>Command "UPGRADE":
+  UPGRADE
+    Upgrade the current scene.</value>
+  </data>
   <data name="en_cmd_help_text" xml:space="preserve">
     <value>How to play:
 There is only needing keyboards to play this game.
@@ -229,7 +234,8 @@ To switch languages, send "LANG" to get a list of all supported languages, and s
   <data name="en_cmd_list_no_args" xml:space="preserve">
     <value>Below are all available parameters:
 CMDS
-SCENES</value>
+SCENES
+UPGRADES</value>
   </data>
   <data name="en_cmd_list_show_cmds" xml:space="preserve">
     <value>Commands list:
@@ -256,6 +262,27 @@ Tree</value>
     <value>Unknown list "{0}".</value>
     <comment>0=输入的列表</comment>
   </data>
+  <data name="en_cmd_list_upgrades_intro_farm" xml:space="preserve">
+    <value>Upgrade to extend the watering keeping time of the slots of Farm. The default is 18 hours, it'll extend for 3.6 hours (3h36m) per level, and the max level is 46.8 hours (1d22h48m).</value>
+  </data>
+  <data name="en_cmd_list_upgrades_intro_garden" xml:space="preserve">
+    <value>The garden upgrade will unlock after all other scenes are fully upgraded. After this upgrade, the pots will change from grey to white. The garden is used to place the flowers you have collected. Each pot holding a different colored flower means you have completed the collection, and the white pots indicate that you have fully upgraded all other scenes. This makes it easy for you to showcase your efforts with just one screenshot.</value>
+  </data>
+  <data name="en_cmd_list_upgrades_intro_inventory" xml:space="preserve">
+    <value>Upgrade to get more pages of Inventory, up to 5 pages.</value>
+  </data>
+  <data name="en_cmd_list_upgrades_intro_market" xml:space="preserve">
+    <value>Upgrade to additionally display tomorrow's market prices.</value>
+  </data>
+  <data name="en_cmd_list_upgrades_intro_store" xml:space="preserve">
+    <value>Upgrade to deduct the cost of manual restock. Default is 200, it'll reduct for 25 per level, the max level is 100.</value>
+  </data>
+  <data name="en_cmd_list_upgrades_intro_tree" xml:space="preserve">
+    <value>Upgrade to get more lines for collecting apple, up to 6 lines.</value>
+  </data>
+  <data name="en_cmd_list_upgrades_next_money" xml:space="preserve">
+    <value>Upgrade need money: </value>
+  </data>
   <data name="en_cmd_load_failed" xml:space="preserve">
     <value>Failed to read the save data from the specified custom save path.</value>
   </data>
@@ -271,17 +298,23 @@ Tree</value>
   <data name="en_cmd_load_success" xml:space="preserve">
     <value>Successfully read the save data from the specified custom save path.</value>
   </data>
+  <data name="en_cmd_page_not_a_number" xml:space="preserve">
+    <value>The input parameters are not a number.</value>
+  </data>
   <data name="en_cmd_page_out_of_bound" xml:space="preserve">
     <value>The specified page number "{0}" is out of the bound of the scene.</value>
     <comment>0=页码数字</comment>
   </data>
   <data name="en_cmd_page_text" xml:space="preserve">
-    <value>    [{0}]Lv.{1}/{2}            Money: {3}z</value>
+    <value>    [{0}]Lv.{1}/{2}            Money: {3}</value>
     <comment>0=场景, 1=当前等级, 2=最高等级, 3=金钱数</comment>
   </data>
   <data name="en_cmd_page_text_pages" xml:space="preserve">
     <value>    Page&lt;{0}&gt;/Total {1}</value>
     <comment>0=当前页, 1=最高页数</comment>
+  </data>
+  <data name="en_cmd_page_width_too_short" xml:space="preserve">
+    <value>The width of the console is too narrow, cause failed to display the scene.</value>
   </data>
   <data name="en_cmd_save_display_the_save_path_using" xml:space="preserve">
     <value>The current using save path is"{0}".</value>
@@ -298,6 +331,9 @@ Tree</value>
   </data>
   <data name="en_cmd_save_target_folder_not_exist" xml:space="preserve">
     <value>The path is not to an exist directory.</value>
+  </data>
+  <data name="en_cmd_swap_garden_not_flower" xml:space="preserve">
+    <value>The slots of Garden can only be empty or placed with flowers.</value>
   </data>
   <data name="en_cmd_swap_hand_empty" xml:space="preserve">
     <value>The handing slot must not be empty when use this command during current scene.</value>
@@ -335,12 +371,15 @@ Tree</value>
     <value>Success to harvest the crop from index "{0}" of farm.</value>
     <comment>0=格子索引</comment>
   </data>
+  <data name="en_cmd_swap_success_garden" xml:space="preserve">
+    <value>Success to swap item with index "{0}" of Garden.</value>
+  </data>
   <data name="en_cmd_swap_success_inventory" xml:space="preserve">
     <value>Success to swap item with page "{0}" index "{1}" of Inventory.</value>
     <comment>0=页码, 1=索引</comment>
   </data>
   <data name="en_cmd_swap_success_market" xml:space="preserve">
-    <value>Got {0}z.</value>
+    <value>Earned {0}.</value>
     <comment>0=金钱</comment>
   </data>
   <data name="en_cmd_swap_success_tree" xml:space="preserve">
@@ -539,12 +578,12 @@ Type and send "HELP" to get start.</value>
   </data>
   <data name="zh_cmd_goto_no_args" xml:space="preserve">
     <value>场景列表:
-Inventory
-Farm
-Store
-Garden
-Market
-Tree</value>
+Inventory    仓库，用于放下物品
+Farm    农田，在此种植作物种子并照料它们
+Store    商店，可在此购买种子和工具
+Garden    花园，摆放花朵作为收集品和展示游戏进度
+Market    市场，查看市场价并出售物品
+Tree    苹果树，会自动产出用于卖钱的苹果</value>
   </data>
   <data name="zh_cmd_goto_success" xml:space="preserve">
     <value>已前往场景"{0}".</value>
@@ -621,6 +660,11 @@ Tree</value>
     与当前场景的当前页面上由索引指定的格子交换物品.
     &lt;index&gt;: 索引序号.</value>
   </data>
+  <data name="zh_cmd_help_show_upgrade" xml:space="preserve">
+    <value>命令"UPGRADE":
+  UPGRADE
+    升级当前场景.</value>
+  </data>
   <data name="zh_cmd_help_show_use" xml:space="preserve">
     <value>命令"USE":
   USE &lt;index&gt;
@@ -652,7 +696,8 @@ Tree</value>
   <data name="zh_cmd_list_no_args" xml:space="preserve">
     <value>以下是可用的参数:
 CMDS
-SCENES</value>
+SCENES
+UPGRADES</value>
   </data>
   <data name="zh_cmd_list_show_cmds" xml:space="preserve">
     <value>命令列表:
@@ -664,20 +709,42 @@ LIST
 LOAD
 SAVE
 SWAP
+UPGRADE
 USE</value>
   </data>
   <data name="zh_cmd_list_show_scenes" xml:space="preserve">
     <value>场景列表:
-Inventory
-Farm
-Store
-Garden
-Market
-Tree</value>
+Inventory    仓库，用于放下物品
+Farm    农田，在此种植作物种子并照料它们
+Store    商店，可在此购买种子和工具
+Garden    花园，摆放花朵作为收集品和展示游戏进度
+Market    市场，查看市场价并出售物品
+Tree    苹果树，会自动产出用于卖钱的苹果</value>
   </data>
   <data name="zh_cmd_list_unknown_arg" xml:space="preserve">
     <value>不存在的列表"{0}".</value>
     <comment>0=输入的列表</comment>
+  </data>
+  <data name="zh_cmd_list_upgrades_intro_farm" xml:space="preserve">
+    <value>升级延长格子土壤保湿时间. 初始为18小时，每升一级可延长3.6小时(3小时36分钟)，满级为46.8小时(1天22小时48分钟).</value>
+  </data>
+  <data name="zh_cmd_list_upgrades_intro_garden" xml:space="preserve">
+    <value>将其他所有场景都升满级后解锁花园的升级，升级后花盆会从灰色变成白色. 花园用于摆放作为收集品的花朵，每个花盆上花朵颜色各异意味着你达成了全收集，而白色的花盆意味着你已经把全部场景升级好了，方便你把你在终端农场中长久以来努力的证明集中在一张屏幕截图中.</value>
+  </data>
+  <data name="zh_cmd_list_upgrades_intro_inventory" xml:space="preserve">
+    <value>升级获得仓库页数，最多可拥有5页.</value>
+  </data>
+  <data name="zh_cmd_list_upgrades_intro_market" xml:space="preserve">
+    <value>升级后市场会额外显示明天的市场价格.</value>
+  </data>
+  <data name="zh_cmd_list_upgrades_intro_store" xml:space="preserve">
+    <value>升级降低手动重新上架商品所需的费用. 初始为200，每升一级可降低25，满级为100.</value>
+  </data>
+  <data name="zh_cmd_list_upgrades_intro_tree" xml:space="preserve">
+    <value>升级获得收集行数，最多可拥有6行.</value>
+  </data>
+  <data name="zh_cmd_list_upgrades_next_money" xml:space="preserve">
+    <value>升级需要资金: </value>
   </data>
   <data name="zh_cmd_load_failed" xml:space="preserve">
     <value>从指定的自定义存档路径读取存档失败.</value>
@@ -694,17 +761,23 @@ Tree</value>
   <data name="zh_cmd_load_success" xml:space="preserve">
     <value>成功从指定的自定义存档路径读取存档.</value>
   </data>
+  <data name="zh_cmd_page_not_a_number" xml:space="preserve">
+    <value>输入的参数不是数字.</value>
+  </data>
   <data name="zh_cmd_page_out_of_bound" xml:space="preserve">
     <value>指定的页码"{0}"超出场景范围.</value>
     <comment>0=页码数字</comment>
   </data>
   <data name="zh_cmd_page_text" xml:space="preserve">
-    <value>  [{0}]等级{1}/{2}        资金: {3}z</value>
+    <value>  [{0}]等级{1}/{2}        资金: {3}</value>
     <comment>0=场景, 1=当前等级, 2=最高等级, 3=金钱数</comment>
   </data>
   <data name="zh_cmd_page_text_pages" xml:space="preserve">
     <value>  第&lt;{0}&gt;/{1}页</value>
     <comment>0=当前页, 1=最高页数</comment>
+  </data>
+  <data name="zh_cmd_page_width_too_short" xml:space="preserve">
+    <value>控制台宽度过短，无法显示场景.</value>
   </data>
   <data name="zh_cmd_save_display_the_save_path_using" xml:space="preserve">
     <value>当前使用的存档路径为"{0}".</value>
@@ -721,6 +794,9 @@ Tree</value>
   </data>
   <data name="zh_cmd_save_target_folder_not_exist" xml:space="preserve">
     <value>该路径指向不是一个已存在的目录.</value>
+  </data>
+  <data name="zh_cmd_swap_garden_not_flower" xml:space="preserve">
+    <value>花园场景的格子只能留空或摆放花朵.</value>
   </data>
   <data name="zh_cmd_swap_hand_empty" xml:space="preserve">
     <value>当前场景使用此命令必须手持槽不为空.</value>
@@ -758,12 +834,16 @@ Tree</value>
     <value>成功从农场索引"{0}"格子收获作物.</value>
     <comment>0=格子索引</comment>
   </data>
+  <data name="zh_cmd_swap_success_garden" xml:space="preserve">
+    <value>成功从花园索引"{0}"格子交换物品.</value>
+    <comment>0=格子索引</comment>
+  </data>
   <data name="zh_cmd_swap_success_inventory" xml:space="preserve">
     <value>成功从仓库第"{0}"页索引"{1}"格子交换物品.</value>
     <comment>0=页码, 1=索引</comment>
   </data>
   <data name="zh_cmd_swap_success_market" xml:space="preserve">
-    <value>已赚取{0}z.</value>
+    <value>已赚取{0}块钱.</value>
     <comment>0=金钱</comment>
   </data>
   <data name="zh_cmd_swap_success_tree" xml:space="preserve">

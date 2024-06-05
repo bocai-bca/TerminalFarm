@@ -17,7 +17,7 @@ namespace TerminalFarm
 		internal enum PrintMessageLevel //输出信息警告规则
 		{
 			Info = 0, //一般信息。有时可能会返回无意中输出的异常
-			Warning = 1, //输入的命令有问题，但被已有应对手段无害处理
+			Warning = 1, //执行输入的命令时有问题，但被已有应对手段无害处理
 			Error = 2, //运行过程出现故障，但被已有应对手段无害处理
 			Fatal = 3 //输出程序本身通过异常处理语句捕获到的异常
 		}
@@ -28,34 +28,6 @@ namespace TerminalFarm
 		};
 		internal static int CurrentScene = 0;
 		internal static int CurrentPage = 0;
-		internal static Dictionary<int, Dictionary<string, object>> SceneData = new()
-		{
-			{0, new Dictionary<string, object>{
-				{"SceneName", "inventory" },
-				{"MaxUpgradeTimes", 4 }
-			}},
-			{1, new Dictionary<string, object>{
-				{"SceneName", "farm" },
-				{"MaxUpgradeTimes", 8 }
-			}},
-			{2, new Dictionary<string, object>{
-				{"SceneName", "store" },
-				{"MaxUpgradeTimes", 4 }
-			}},
-			{3, new Dictionary<string, object>{
-				{"SceneName", "garden" },
-				{"MaxUpgradeTimes", 0 }
-			}},
-			{4, new Dictionary<string, object>{
-				{"SceneName", "market" },
-				{"MaxUpgradeTimes", 1 }
-			}},
-			{5, new Dictionary<string, object>{
-				{"SceneName", "tree" },
-				{"MaxUpgradeTimes", 5 }
-			}}
-
-		};
 		internal static Dictionary<string, object>? MemoryGameData = GameDataInit();
 		internal static Random mainRandom = new(); //主随机数
 		internal static string MemoryCustomPath = "";
@@ -249,6 +221,9 @@ namespace TerminalFarm
 								case "LOAD":
 									PrintMessage(translator.Translate("cmd_help_show_load"), PrintMessageLevel.Info);
 									break;
+								case "UPGRADE":
+									PrintMessage(translator.Translate("cmd_help_show_upgrade"), PrintMessageLevel.Info);
+									break;
 								case "USE":
 									PrintMessage(translator.Translate("cmd_help_show_use"), PrintMessageLevel.Info);
 									break;
@@ -421,6 +396,11 @@ namespace TerminalFarm
 						break;
 					case "LIST": //LIST命令
 						shouldSave = false;
+						if (MemoryGameData == null)
+						{
+							PrintMessage(translator.Translate("gamesave_null_error"), PrintMessageLevel.Error);
+							break;
+						}
 						if (hasArgs)
 						{
 							//如果有参数
@@ -432,6 +412,14 @@ namespace TerminalFarm
 									break;
 								case "SCENES": //显示场景列表
 									PrintMessage(translator.Translate("cmd_list_show_scenes"), PrintMessageLevel.Info);
+									break;
+								case "UPGRADES": //显示场景升级信息
+									Console.Write("\n");
+									for (int sceneID = 0; sceneID < 6; sceneID++){
+										Console.WriteLine(translator.Translate("scene_name_" + SceneData[sceneID]["SceneName"]));
+										Console.WriteLine(ListUpgradesMainLines(translator, sceneID, (List<object>)MemoryGameData["ScenesData"]));
+										Console.WriteLine("  " + translator.Translate("cmd_list_upgrades_intro_" + SceneData[sceneID]["SceneName"]));
+									}
 									break;
 								default: //其他
 									PrintMessage(String.Format(translator.Translate("cmd_list_unknown_arg"), arg), PrintMessageLevel.Warning);
@@ -453,7 +441,11 @@ namespace TerminalFarm
 						if (hasArgs)
 						{
 							//如果有参数
-							int arg = Convert.ToInt32(inputSplited[1] ?? "1");
+							if (!int.TryParse(inputSplited[1] ?? "1", out int arg))
+							{
+								PrintMessage(translator.Translate("cmd_page_not_a_number"), PrintMessageLevel.Warning);
+								break;
+							}
 							int pageMax = GetPagesCount(CurrentScene, (int)((Dictionary<string, object>)((List<object>)MemoryGameData["ScenesData"])[CurrentScene])["UpgradedTimes"]);
 							if (1 <= arg && arg <= pageMax) //符合页面范围
 							{
@@ -530,6 +522,78 @@ namespace TerminalFarm
 								}
 								break;
 							case 3: //花园
+								if (Console.WindowWidth < 59) //如果画面宽度过小
+								{
+									PrintMessage(translator.Translate("cmd_page_width_too_short"), PrintMessageLevel.Warning);
+									break;
+								}
+								Console.Write("\n");
+								foreach (List<int> mapLine in GardenPageMap)
+								{
+									foreach (int pixelInt in mapLine)
+									{
+										if (pixelInt == 0) //空格
+										{
+											Console.Write(" ");
+											continue;
+										}
+										if (pixelInt == 1) //花盆灰
+										{
+											Console.ForegroundColor = ConsoleColor.DarkGray;
+											Console.Write("█");
+											Console.ResetColor();
+											continue;
+										}
+										int slotID;
+										if (pixelInt <= 19) //花瓣颜色
+										{
+											slotID = (int)((Dictionary<string, object>)currentSceneSlots[pixelInt - 10])["ItemID"];
+											if (slotID != 0)
+											{
+												Console.ForegroundColor = ItemsProperties[slotID].TextColor;
+												Console.Write("█");
+												Console.ResetColor();
+											}
+											else
+											{
+												Console.Write(" ");
+											}
+											continue;
+										}
+										if (pixelInt <= 29) //花蕊
+										{
+											slotID = (int)((Dictionary<string, object>)currentSceneSlots[pixelInt - 20])["ItemID"];
+											if (slotID != 0)
+											{
+												Console.ForegroundColor = ConsoleColor.DarkYellow;
+												Console.Write("█");
+												Console.ResetColor();
+											}
+											else
+											{
+												Console.Write(" ");
+											}
+											continue;
+										}
+										if (pixelInt <= 39) //花茎
+										{
+											slotID = (int)((Dictionary<string, object>)currentSceneSlots[pixelInt - 30])["ItemID"];
+											if (slotID != 0)
+											{
+												Console.ForegroundColor = ConsoleColor.DarkGreen;
+												Console.Write("█");
+												Console.ResetColor();
+											}
+											else
+											{
+												Console.Write(" ");
+											}
+											continue;
+										}
+									}
+									Console.Write("\n");
+								}
+								Console.Write("\n    0         1         2         3         4         5");
 								break;
 							case 4: //市场
 								for (int i = 0; i < 6; i++)
@@ -758,6 +822,36 @@ namespace TerminalFarm
 											MemoryGameData["TakingItemID"] = targetItemID;
 										}
 										PrintMessage(String.Format(translator.Translate("cmd_swap_shop_success"), translator.Translate("item_name_" + ItemsProperties[targetItemID].Name)), PrintMessageLevel.Info);
+										break;
+									case 3: //花园
+										try
+										{
+											int takingID = (int)MemoryGameData["TakingItemID"];
+											if (takingID == 0 || FlowerIDs.Contains<int>(takingID)) //如果手里是空气或者花朵，允许交换
+											{
+												targetItem = ((Dictionary<string, object>)currentSceneSlots[argIndex]);
+												targetItemID = (int)targetItem["ItemID"];
+												targetItem["ItemID"] = (int)MemoryGameData["TakingItemID"];
+												MemoryGameData["TakingItemID"] = targetItemID;
+											}
+											else //否则报错
+											{
+												PrintMessage(translator.Translate("cmd_swap_garden_not_flower"), PrintMessageLevel.Warning);
+												isSuccess = false;
+											}
+											
+										}
+										catch (Exception ex)
+										{
+											PrintMessage(String.Format("[{0}] Error : \n", translator.Translate("game_title")) + ex.ToString() + "\n", PrintMessageLevel.Fatal);
+											isSuccess = false;
+										}
+										if (isSuccess)
+										{
+											shouldSave = true;
+											needGotoPage = true;
+											PrintMessage(String.Format(translator.Translate("cmd_swap_success_garden"), argIndex), PrintMessageLevel.Info);
+										}
 										break;
 									case 4: //市场
 										PrintMessage(translator.Translate("cmd_swap_scene_not_support"), PrintMessageLevel.Warning);
@@ -1122,6 +1216,14 @@ namespace TerminalFarm
 							PrintMessage(translator.Translate("cmd_use_need_arg"), PrintMessageLevel.Warning);
 							break;
 						}
+					case "UPGRADE":
+						if (MemoryGameData == null)
+						{
+							PrintMessage(translator.Translate("gamesave_null_error"), PrintMessageLevel.Error);
+							break;
+						}
+						
+						break;
 					default:
 						PrintMessage(String.Format(translator.Translate("unknown_cmd"), inputSplited[0]), PrintMessageLevel.Warning);
 						break;
@@ -1180,6 +1282,18 @@ namespace TerminalFarm
 				}
 			}
 		}
+		internal static string ListUpgradesMainLines(TextTranslator translator, int sceneNumberID, List<object> memoryScenesData) //传入相应参数，返回用于WriteLine在list upgrades中每个场景的主行的字符串，大概的内容是 仓库  [██---]  升级需要资金: 1200
+		{
+			string result = "  [█";
+			int hadUpgradedTimes = (int)((Dictionary<string, object>)memoryScenesData[0])["UpgradedTimes"];
+			string blockBar = "";
+			for (int i = 0; i < hadUpgradedTimes; i++)
+			{
+				blockBar += "█";
+			}
+			result += blockBar.PadRight((int)SceneData[sceneNumberID]["MaxUpgradeTimes"], '-') + "] " + translator.Translate("cmd_list_upgrades_next_money") + ((List<int>)SceneData[sceneNumberID]["UpgradeCosts"])[hadUpgradedTimes];
+			return result;
+		}
 		internal static Dictionary<string, object> UpdateAppleTree(Dictionary<string, object> treeData) //传入整个苹果树的数据，返回更新至当前时间的苹果树
 		{
 			Dictionary<string, object> result = new(treeData);
@@ -1236,7 +1350,7 @@ namespace TerminalFarm
 					((Dictionary<string, object>)slots[6 + 4])["ItemID"] = 39;
 					((Dictionary<string, object>)slots[6 + 4])["Price"] = ItemsProperties[39].MarketItemProperties.NowPrice * 2;
 					((Dictionary<string, object>)slots[6 + 5])["ItemID"] = 40;
-					((Dictionary<string, object>)slots[6 + 5])["Price"] = ItemsProperties[40].MarketItemProperties.NowPrice * 2;
+					((Dictionary<string, object>)slots[6 + 5])["Price"] = ItemsProperties[40].MarketItemProperties.NowPrice * 2; //这里只起到初始化存档中的第二页的作用，重新补货的价格由升级直接修改，而不是这里
 				}
 			}
 			return result;
@@ -1260,6 +1374,10 @@ namespace TerminalFarm
 				{
 					hadWaterSpan -= needWaterSpan;
 					int newPlantID = FarmPlantGrow((int)result["ItemID"]);
+					if (newPlantID == 38) //成花抽花
+					{
+						newPlantID = new Random().Next(0, FlowerIDs.Length - 1);
+					}
 					result["ItemID"] = newPlantID;
 					needWaterSpan = ItemsProperties[newPlantID].FarmSlotProperties.GrowTime; //更新总共需要的湿润时间到新的物品ID
 				}
