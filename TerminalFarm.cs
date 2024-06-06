@@ -527,6 +527,7 @@ namespace TerminalFarm
 									PrintMessage(translator.Translate("cmd_page_width_too_short"), PrintMessageLevel.Warning);
 									break;
 								}
+								bool wasUpgrade = (int)currentSceneData["UpgradedTimes"] >= 1;
 								Console.Write("\n");
 								foreach (List<int> mapLine in GardenPageMap)
 								{
@@ -540,6 +541,20 @@ namespace TerminalFarm
 										if (pixelInt == 1) //花盆灰
 										{
 											Console.ForegroundColor = ConsoleColor.DarkGray;
+											Console.Write("█");
+											Console.ResetColor();
+											continue;
+										}
+										if (pixelInt == 2) //花盆白
+										{
+											if (wasUpgrade)
+											{
+												Console.ForegroundColor = ConsoleColor.White;
+											}
+											else
+											{
+												Console.ForegroundColor = ConsoleColor.DarkGray;
+											}
 											Console.Write("█");
 											Console.ResetColor();
 											continue;
@@ -593,7 +608,7 @@ namespace TerminalFarm
 									}
 									Console.Write("\n");
 								}
-								Console.Write("\n    0         1         2         3         4         5");
+								Console.WriteLine("    0         1         2         3         4         5");
 								break;
 							case 4: //市场
 								for (int i = 0; i < 6; i++)
@@ -615,6 +630,7 @@ namespace TerminalFarm
 								}
 								break;
 							case 5: //苹果树
+								shouldSave = true;
 								((List<object>)MemoryGameData["ScenesData"])[5] = UpdateAppleTree(currentSceneData);
 								currentSceneData = (Dictionary<string, object>)((List<object>)MemoryGameData["ScenesData"])[5];
 								int appleCount = (int)currentSceneData["AppleCollected"];
@@ -1222,7 +1238,62 @@ namespace TerminalFarm
 							PrintMessage(translator.Translate("gamesave_null_error"), PrintMessageLevel.Error);
 							break;
 						}
-						
+						currentSceneData = (Dictionary<string, object>)((List<object>)MemoryGameData["ScenesData"])[CurrentScene];
+						int hadUpgradeTimes = (int)currentSceneData["UpgradedTimes"];
+						int maxUpgradeTimes = (int)SceneData[CurrentScene]["MaxUpgradeTimes"];
+						if (CurrentScene == 3) //如果为花园
+						{
+							bool canUpgradeGarden = true;
+							for (int i = 0; i < 3; i++)
+							{
+								if ((int)((Dictionary<string, object>)((List<object>)MemoryGameData["ScenesData"])[i])["UpgradedTimes"] != (int)SceneData[i]["MaxUpgradeTimes"])
+								{
+									canUpgradeGarden = false;
+								}
+							}
+							for (int i = 4; i < 6; i++)
+							{
+								if ((int)((Dictionary<string, object>)((List<object>)MemoryGameData["ScenesData"])[i])["UpgradedTimes"] != (int)SceneData[i]["MaxUpgradeTimes"])
+								{
+									canUpgradeGarden = false;
+								}
+							}
+							if (!canUpgradeGarden)
+							{
+								PrintMessage(translator.Translate("cmd_upgrade_garden_locked"), PrintMessageLevel.Info);
+								break;
+							}
+						}
+						if (hadUpgradeTimes >= maxUpgradeTimes)
+						{
+							PrintMessage(translator.Translate("cmd_upgrade_scene_max"), PrintMessageLevel.Warning);
+							break;
+						}
+						int needMoney = ((List<int>)SceneData[CurrentScene]["UpgradeCosts"])[hadUpgradeTimes];
+						int haveMoney = (int)MemoryGameData["Money"];
+						if (haveMoney < needMoney)
+						{
+							PrintMessage(translator.Translate("cmd_upgrade_no_money"), PrintMessageLevel.Warning);
+							break;
+						}
+						shouldSave = true;
+						hadUpgradeTimes++;
+						currentSceneData["UpgradedTimes"] = hadUpgradeTimes;
+						haveMoney -= needMoney;
+						MemoryGameData["Money"] = haveMoney;
+						if (CurrentScene == 2) //如果为商店
+						{
+							((List<object>)MemoryGameData["ScenesData"])[CurrentScene] = UpdateStore(currentSceneData);
+							((Dictionary<string, object>)((List<object>)currentSceneData["Slots"])[11])["Price"] = ItemsProperties[40].MarketItemProperties.NowPrice * (2.0f - 0.25f * hadUpgradeTimes);
+						}
+                        if (CurrentScene == 5) //如果为苹果树
+                        {
+							if ((int)currentSceneData["AppleCollected"] >= hadUpgradeTimes)
+							{
+								currentSceneData["LastTimeGotApple"] = DateTime.UtcNow.ToBinary().ToString();
+							}
+                        }
+                        PrintMessage(String.Format(translator.Translate("cmd_upgrade_success"), translator.Translate("scene_name_" + SceneData[CurrentScene]["SceneName"])), PrintMessageLevel.Info);
 						break;
 					default:
 						PrintMessage(String.Format(translator.Translate("unknown_cmd"), inputSplited[0]), PrintMessageLevel.Warning);
@@ -1285,13 +1356,21 @@ namespace TerminalFarm
 		internal static string ListUpgradesMainLines(TextTranslator translator, int sceneNumberID, List<object> memoryScenesData) //传入相应参数，返回用于WriteLine在list upgrades中每个场景的主行的字符串，大概的内容是 仓库  [██---]  升级需要资金: 1200
 		{
 			string result = "  [█";
-			int hadUpgradedTimes = (int)((Dictionary<string, object>)memoryScenesData[0])["UpgradedTimes"];
+			int hadUpgradedTimes = (int)((Dictionary<string, object>)memoryScenesData[sceneNumberID])["UpgradedTimes"];
 			string blockBar = "";
 			for (int i = 0; i < hadUpgradedTimes; i++)
 			{
 				blockBar += "█";
 			}
-			result += blockBar.PadRight((int)SceneData[sceneNumberID]["MaxUpgradeTimes"], '-') + "] " + translator.Translate("cmd_list_upgrades_next_money") + ((List<int>)SceneData[sceneNumberID]["UpgradeCosts"])[hadUpgradedTimes];
+			int maxUpgradeTimes = (int)SceneData[sceneNumberID]["MaxUpgradeTimes"];
+			if (hadUpgradedTimes >= maxUpgradeTimes)
+			{
+				result += blockBar.PadRight(maxUpgradeTimes, '-') + "]";
+			}
+			else
+			{
+				result += blockBar.PadRight(maxUpgradeTimes, '-') + "] " + translator.Translate("cmd_list_upgrades_next_money") + ((List<int>)SceneData[sceneNumberID]["UpgradeCosts"])[hadUpgradedTimes];
+			}
 			return result;
 		}
 		internal static Dictionary<string, object> UpdateAppleTree(Dictionary<string, object> treeData) //传入整个苹果树的数据，返回更新至当前时间的苹果树

@@ -389,6 +389,19 @@ Tree</value>
     <value>Slot "{0}" cannot swap.</value>
     <comment>0=格子索引</comment>
   </data>
+  <data name="en_cmd_upgrade_garden_locked" xml:space="preserve">
+    <value>The upgrade of Garden is locked. Please use "LIST UPGRADES" to check it.</value>
+  </data>
+  <data name="en_cmd_upgrade_no_money" xml:space="preserve">
+    <value>Money not enough.</value>
+  </data>
+  <data name="en_cmd_upgrade_scene_max" xml:space="preserve">
+    <value>Current scene was full upgrade.</value>
+  </data>
+  <data name="en_cmd_upgrade_success" xml:space="preserve">
+    <value>"{0}" has been upgraded.</value>
+    <comment>0=场景名</comment>
+  </data>
   <data name="en_cmd_use_index_out_of_bound" xml:space="preserve">
     <value>The index number is out of bound.</value>
   </data>
@@ -852,6 +865,19 @@ Tree    苹果树，会自动产出用于卖钱的苹果</value>
   <data name="zh_cmd_swap_target_cannot_swap" xml:space="preserve">
     <value>格子"{0}"不可交换.</value>
     <comment>0=格子索引</comment>
+  </data>
+  <data name="zh_cmd_upgrade_garden_locked" xml:space="preserve">
+    <value>花园升级已锁定，请使用"LIST UPGRADES"查看.</value>
+  </data>
+  <data name="zh_cmd_upgrade_no_money" xml:space="preserve">
+    <value>资金不足.</value>
+  </data>
+  <data name="zh_cmd_upgrade_scene_max" xml:space="preserve">
+    <value>当前场景已满级.</value>
+  </data>
+  <data name="zh_cmd_upgrade_success" xml:space="preserve">
+    <value>已升级场景"{0}".</value>
+    <comment>0=场景名</comment>
   </data>
   <data name="zh_cmd_use_index_out_of_bound" xml:space="preserve">
     <value>索引序号超出范围.</value>
