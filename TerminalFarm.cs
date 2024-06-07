@@ -1286,14 +1286,14 @@ namespace TerminalFarm
 							((List<object>)MemoryGameData["ScenesData"])[CurrentScene] = UpdateStore(currentSceneData);
 							((Dictionary<string, object>)((List<object>)currentSceneData["Slots"])[11])["Price"] = ItemsProperties[40].MarketItemProperties.NowPrice * (2.0f - 0.25f * hadUpgradeTimes);
 						}
-                        if (CurrentScene == 5) //如果为苹果树
-                        {
+						if (CurrentScene == 5) //如果为苹果树
+						{
 							if ((int)currentSceneData["AppleCollected"] >= hadUpgradeTimes)
 							{
 								currentSceneData["LastTimeGotApple"] = DateTime.UtcNow.ToBinary().ToString();
 							}
-                        }
-                        PrintMessage(String.Format(translator.Translate("cmd_upgrade_success"), translator.Translate("scene_name_" + SceneData[CurrentScene]["SceneName"])), PrintMessageLevel.Info);
+						}
+						PrintMessage(String.Format(translator.Translate("cmd_upgrade_success"), translator.Translate("scene_name_" + SceneData[CurrentScene]["SceneName"])), PrintMessageLevel.Info);
 						break;
 					default:
 						PrintMessage(String.Format(translator.Translate("unknown_cmd"), inputSplited[0]), PrintMessageLevel.Warning);
@@ -1626,7 +1626,7 @@ namespace TerminalFarm
 				@"{
 					""UseLanguage"": 0,
 					""CustomPath"": """",
-					""Money"": 0,
+					""Money"": 700,
 					""TakingItemID"": 0,
 					""ScenesData"": [
 						{
