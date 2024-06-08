@@ -135,13 +135,18 @@ Tree</value>
   <data name="en_cmd_goto_unknown_arg" xml:space="preserve">
     <value>Unknown scene "{0}".</value>
   </data>
+  <data name="en_cmd_help_show_clear" xml:space="preserve">
+    <value>Command "CLEAR"(CLS):
+  CLEAR
+    Clear screen.</value>
+  </data>
   <data name="en_cmd_help_show_exit" xml:space="preserve">
     <value>Command "EXIT":
   EXIT
     Exit the game.</value>
   </data>
   <data name="en_cmd_help_show_goto" xml:space="preserve">
-    <value>Command "GOTO":
+    <value>Command "GOTO"(CD):
   GOTO
     Display all the scenes.
   GOTO &lt;scene&gt;
@@ -165,7 +170,7 @@ Tree</value>
     &lt;index&gt;: The index of a language.</value>
   </data>
   <data name="en_cmd_help_show_list" xml:space="preserve">
-    <value>Command "LIST":
+    <value>Command "LIST"(LS):
   LIST
     Display all parameters of this command.
   LIST &lt;list&gt;
@@ -179,7 +184,7 @@ Tree</value>
     &lt;path&gt;: An absolute path strictly pointing to the "TerminalFarm.json" file.</value>
   </data>
   <data name="en_cmd_help_show_page" xml:space="preserve">
-    <value>Command "PAGE":
+    <value>Command "PAGE"(DIR):
   PAGE
     Display the current page of the current scene.
   PAGE &lt;number&gt;
@@ -197,7 +202,7 @@ Tree</value>
     &lt;path&gt;: An absolute path to an existing directory.</value>
   </data>
   <data name="en_cmd_help_show_swap" xml:space="preserve">
-    <value>Command "SWAP":
+    <value>Command "SWAP"(S):
   SWAP
     Switch items without index number at the market and apple tree scenes.
   SWAP &lt;index&gt;
@@ -205,9 +210,15 @@ Tree</value>
     &lt;index&gt;: Index number.</value>
   </data>
   <data name="en_cmd_help_show_upgrade" xml:space="preserve">
-    <value>Command "UPGRADE":
+    <value>Command "UPGRADE"(UPG):
   UPGRADE
     Upgrade the current scene.</value>
+  </data>
+  <data name="en_cmd_help_show_use" xml:space="preserve">
+    <value>Command "USE"(D):
+  USE &lt;index&gt;
+    Use item to the specified slot of the current page of the current scene by index.
+    &lt;index&gt;: Index number.</value>
   </data>
   <data name="en_cmd_help_text" xml:space="preserve">
     <value>How to play:
@@ -239,6 +250,7 @@ UPGRADES</value>
   </data>
   <data name="en_cmd_list_show_cmds" xml:space="preserve">
     <value>Commands list:
+CLEAR
 EXIT
 GOTO
 HELP
@@ -604,13 +616,18 @@ Tree    苹果树，会自动产出用于卖钱的苹果</value>
   <data name="zh_cmd_goto_unknown_arg" xml:space="preserve">
     <value>不存在的场景"{0}".</value>
   </data>
+  <data name="zh_cmd_help_show_clear" xml:space="preserve">
+    <value>命令"CLEAR"(CLS):
+  CLEAR
+    清空屏幕.</value>
+  </data>
   <data name="zh_cmd_help_show_exit" xml:space="preserve">
     <value>命令"EXIT":
   EXIT
     退出游戏.</value>
   </data>
   <data name="zh_cmd_help_show_goto" xml:space="preserve">
-    <value>命令"GOTO":
+    <value>命令"GOTO"(CD):
   GOTO
     显示所有场景.
   GOTO &lt;scene&gt;
@@ -634,12 +651,12 @@ Tree    苹果树，会自动产出用于卖钱的苹果</value>
     &lt;index&gt;: 一个语言的索引.</value>
   </data>
   <data name="zh_cmd_help_show_list" xml:space="preserve">
-    <value>命令"LIST":
+    <value>命令"LIST"(LS):
   LIST
     显示所有列表参数.
   LIST &lt;list&gt;
     显示指定列表.
-    &lt;list&gt;: 一个列表参数.</value>
+    &lt;list&gt;: 一个列表参数(可以只填首字母).</value>
   </data>
   <data name="zh_cmd_help_show_load" xml:space="preserve">
     <value>命令"LOAD":
@@ -648,7 +665,7 @@ Tree    苹果树，会自动产出用于卖钱的苹果</value>
     &lt;path&gt;: 一个严格指向"TerminalFarm.json"文件的绝对路径.</value>
   </data>
   <data name="zh_cmd_help_show_page" xml:space="preserve">
-    <value>命令"PAGE":
+    <value>命令"PAGE"(DIR):
   PAGE
     显示当前场景的当前页面.
   PAGE &lt;number&gt;
@@ -666,7 +683,7 @@ Tree    苹果树，会自动产出用于卖钱的苹果</value>
     &lt;path&gt;: 一个指向已存在目录的绝对路径.</value>
   </data>
   <data name="zh_cmd_help_show_swap" xml:space="preserve">
-    <value>命令"SWAP":
+    <value>命令"SWAP"(S):
   SWAP
     在市场和苹果树场景中不使用索引数交换物品.
   SWAP &lt;index&gt;
@@ -674,12 +691,12 @@ Tree    苹果树，会自动产出用于卖钱的苹果</value>
     &lt;index&gt;: 索引序号.</value>
   </data>
   <data name="zh_cmd_help_show_upgrade" xml:space="preserve">
-    <value>命令"UPGRADE":
+    <value>命令"UPGRADE"(UPG):
   UPGRADE
     升级当前场景.</value>
   </data>
   <data name="zh_cmd_help_show_use" xml:space="preserve">
-    <value>命令"USE":
+    <value>命令"USE"(D):
   USE &lt;index&gt;
     将手持物品使用在当前场景的当前页面上由索引指定的格子.
     &lt;index&gt;: 索引序号.</value>
@@ -714,25 +731,26 @@ UPGRADES</value>
   </data>
   <data name="zh_cmd_list_show_cmds" xml:space="preserve">
     <value>命令列表:
-EXIT
-GOTO
-HELP
-LANG
-LIST
-LOAD
-SAVE
-SWAP
-UPGRADE
-USE</value>
+CLEAR    -  清空控制台屏幕
+EXIT    -  退出游戏
+GOTO    -  前往特定场景
+HELP    -  显示帮助或命令信息
+LANG    -  切换语言
+LIST    -  列出特定列表
+LOAD    -  读取存档
+SAVE    -  保存存档
+SWAP    -  与格子交换物品
+UPGRADE    -  升级当前场景
+USE    -  对格子使用物品</value>
   </data>
   <data name="zh_cmd_list_show_scenes" xml:space="preserve">
     <value>场景列表:
-Inventory    仓库，用于放下物品
-Farm    农田，在此种植作物种子并照料它们
-Store    商店，可在此购买种子和工具
-Garden    花园，摆放花朵作为收集品和展示游戏进度
-Market    市场，查看市场价并出售物品
-Tree    苹果树，会自动产出用于卖钱的苹果</value>
+Inventory    -  仓库，用于放下物品
+Farm    -  农田，在此种植作物种子并照料它们
+Store    -  商店，可在此购买种子和工具
+Garden    -  花园，摆放花朵作为收集品和展示游戏进度
+Market    -  市场，查看市场价并出售物品
+Tree    -  苹果树，会自动产出用于卖钱的苹果</value>
   </data>
   <data name="zh_cmd_list_unknown_arg" xml:space="preserve">
     <value>不存在的列表"{0}".</value>

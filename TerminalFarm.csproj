@@ -9,6 +9,7 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <StartupObject>TerminalFarm.TerminalFarmGame</StartupObject>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+	<JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />

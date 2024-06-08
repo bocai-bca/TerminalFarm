@@ -2,18 +2,20 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
+using System.Xml.Schema;
 using static TerminalFarm.TerminalFarmData;
 
 namespace TerminalFarm
 {
 	internal static class TerminalFarmGame
 	{
-		internal const int VersionBVH = 1000;
+		internal const int VersionBVH = 1001;
 		internal enum PrintMessageLevel //输出信息警告规则
 		{
 			Info = 0, //一般信息。有时可能会返回无意中输出的异常
@@ -32,7 +34,9 @@ namespace TerminalFarm
 		internal static Random mainRandom = new(); //主随机数
 		internal static string MemoryCustomPath = "";
 		internal static bool IsGameStillRunning = true; //用于在主循环中结束循环
-		internal static void Main(string[] args) //入口点
+
+        [RequiresUnreferencedCode("Calls System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, JsonSerializerOptions)")]
+        internal static void Main(string[] args) //入口点
 		{
 			//获取游戏翻译文本的资源管理器
 			ResourceManager resMgrTranslatedText = new("TerminalFarm.TranslatedText", typeof(TerminalFarmGame).Assembly);
@@ -181,6 +185,12 @@ namespace TerminalFarm
 				bool needGotoPage = false; //正选需要在结尾时跳转到PAGE，跳转的代码由每个case自己编写
 				switch (inputSplited[0].ToUpper()) //将输入的第一个词语大写化然后匹配检查
 				{
+					case "": //没输入
+						break;
+					case "CLS":
+					case "CLEAR": //CLEAR命令
+						Console.Clear();
+						break;
 					case "EXIT": //EXIT命令
 						IsGameStillRunning = false;
 						PrintMessage(translator.Translate("cmd_exit"), PrintMessageLevel.Info);
@@ -197,33 +207,43 @@ namespace TerminalFarm
 								case "EXIT":
 									PrintMessage(translator.Translate("cmd_help_show_exit"), PrintMessageLevel.Info);
 									break;
+								case "CLS":
+								case "CLEAR":
+                                    PrintMessage(translator.Translate("cmd_help_show_clear"), PrintMessageLevel.Info);
+                                    break;
 								case "HELP":
 									PrintMessage(translator.Translate("cmd_help_show_help"), PrintMessageLevel.Info);
 									break;
 								case "LANG":
 									PrintMessage(translator.Translate("cmd_help_show_lang"), PrintMessageLevel.Info);
 									break;
+								case "LS":
 								case "LIST":
 									PrintMessage(translator.Translate("cmd_help_show_list"), PrintMessageLevel.Info);
 									break;
+								case "CD":
 								case "GOTO":
 									PrintMessage(translator.Translate("cmd_help_show_goto"), PrintMessageLevel.Info);
 									break;
+								case "DIR":
 								case "PAGE":
 									PrintMessage(translator.Translate("cmd_help_show_page"), PrintMessageLevel.Info);
 									break;
 								case "SAVE":
 									PrintMessage(translator.Translate("cmd_help_show_save"), PrintMessageLevel.Info);
 									break;
+								case "S":
 								case "SWAP":
 									PrintMessage(translator.Translate("cmd_help_show_swap"), PrintMessageLevel.Info);
 									break;
 								case "LOAD":
 									PrintMessage(translator.Translate("cmd_help_show_load"), PrintMessageLevel.Info);
 									break;
+								case "UPG":
 								case "UPGRADE":
 									PrintMessage(translator.Translate("cmd_help_show_upgrade"), PrintMessageLevel.Info);
 									break;
+								case "D":
 								case "USE":
 									PrintMessage(translator.Translate("cmd_help_show_use"), PrintMessageLevel.Info);
 									break;
@@ -394,6 +414,7 @@ namespace TerminalFarm
 							PrintMessage(translator.Translate("cmd_load_no_args"), PrintMessageLevel.Warning);
 						}
 						break;
+					case "LS":
 					case "LIST": //LIST命令
 						shouldSave = false;
 						if (MemoryGameData == null)
@@ -407,12 +428,15 @@ namespace TerminalFarm
 							string arg = inputSplited[1].ToUpper();
 							switch (arg)
 							{
+								case "C":
 								case "CMDS": //显示命令列表
 									PrintMessage(translator.Translate("cmd_list_show_cmds"), PrintMessageLevel.Info);
 									break;
+								case "S":
 								case "SCENES": //显示场景列表
 									PrintMessage(translator.Translate("cmd_list_show_scenes"), PrintMessageLevel.Info);
 									break;
+								case "U":
 								case "UPGRADES": //显示场景升级信息
 									Console.Write("\n");
 									for (int sceneID = 0; sceneID < 6; sceneID++){
@@ -432,6 +456,7 @@ namespace TerminalFarm
 							PrintMessage(translator.Translate("cmd_list_no_args"), PrintMessageLevel.Info);
 						}
 						break;
+					case "DIR":
 					case "PAGE": //PAGE命令
 						if (MemoryGameData == null)
 						{
@@ -700,6 +725,7 @@ namespace TerminalFarm
 						}
 						PrintMessage(String.Format(translator.Translate("cmd_page_text_pages"), CurrentPage + 1, GetPagesCount(CurrentScene, (int)((Dictionary<string, object>)((List<object>)MemoryGameData["ScenesData"])[CurrentScene])["UpgradedTimes"])), PrintMessageLevel.Info);
 						break;
+					case "S":
 					case "SWAP": //SWAP命令
 						if (MemoryGameData == null)
 						{
@@ -968,6 +994,7 @@ namespace TerminalFarm
 							goto case "PAGE";
 						}
 						break;
+					case "CD":
 					case "GOTO": //GOTO命令
 						if (hasArgs)
 						{
@@ -1134,6 +1161,7 @@ namespace TerminalFarm
 							PrintMessage(translator.Translate("cmd_goto_no_args"), PrintMessageLevel.Info);
 						}
 						break;
+					case "D":
 					case "USE":
 						if (MemoryGameData == null)
 						{
@@ -1232,6 +1260,7 @@ namespace TerminalFarm
 							PrintMessage(translator.Translate("cmd_use_need_arg"), PrintMessageLevel.Warning);
 							break;
 						}
+					case "UPG":
 					case "UPGRADE":
 						if (MemoryGameData == null)
 						{
