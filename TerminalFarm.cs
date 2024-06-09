@@ -15,7 +15,7 @@ namespace TerminalFarm
 {
 	internal static class TerminalFarmGame
 	{
-		internal const int VersionBVH = 1003;
+		internal const int VersionBVH = 1004;
 		internal enum PrintMessageLevel //输出信息警告规则
 		{
 			Info = 0, //一般信息。有时可能会返回无意中输出的异常
@@ -30,6 +30,7 @@ namespace TerminalFarm
 		};
 		internal static int CurrentScene = 0;
 		internal static int CurrentPage = 0;
+		internal static bool IsDebuging = false;
 		internal static Dictionary<string, object>? MemoryGameData = GameDataInit();
 		internal static Random mainRandom = new(); //主随机数
 		internal static string MemoryCustomPath = "";
@@ -186,6 +187,10 @@ namespace TerminalFarm
 				switch (inputSplited[0].ToUpper()) //将输入的第一个词语大写化然后匹配检查
 				{
 					case "": //没输入
+						break;
+					case "DEBUG":
+						IsDebuging = !IsDebuging;
+						Console.WriteLine(IsDebuging.ToString());
 						break;
 					case "CLS":
 					case "CLEAR": //CLEAR命令
@@ -1439,7 +1444,7 @@ namespace TerminalFarm
 				{
 					if ((int)((Dictionary<string, object>)slots[i])["ItemID"] == 0) //如果格子是空的
 					{
-						int itemID = StoreItemsIDPage1[mainRandom.Next(0, StoreItemsIDPage1.Count - 1)];
+						int itemID = StoreItemsIDPage1[mainRandom.Next(0, StoreItemsIDPage1.Count)];
 						((Dictionary<string, object>)slots[i])["ItemID"] = itemID;
 						((Dictionary<string, object>)slots[i])["Price"] = ItemsProperties[itemID].MarketItemProperties.NowPrice;
 					}
@@ -1479,7 +1484,10 @@ namespace TerminalFarm
 			}
 			TimeSpan hadWaterSpan = TimeSpan.FromTicks(Convert.ToInt64(farmSlot["HadWaterTime"])) + realWaterSpan; //读取累积湿润时间并加上新增湿润时间。可用于后续不断作减法
 			TimeSpan needWaterSpan = ItemsProperties[sourcePlantID].FarmSlotProperties.GrowTime; //读取对应作物总共需要的湿润时间
-			Console.WriteLine("debug:" + "\nLastUpdateTime: " + DateTime.FromBinary(Convert.ToInt64(farmSlot["LastUpdateTime"])).ToString() + "\nLastWaterTime: " + DateTime.FromBinary(Convert.ToInt64(farmSlot["LastWaterTime"])).ToString() + "\nslotDryTime(日期): " + slotDryTime.ToString() + "\nrealWaterSpan(长度): " + realWaterSpan.ToString() + "\nhadWaterSpan(长度): " + hadWaterSpan + "\nneedWaterSpan: " + needWaterSpan);
+			if (IsDebuging)
+			{
+				Console.WriteLine("debug:" + "\nLastUpdateTime: " + DateTime.FromBinary(Convert.ToInt64(farmSlot["LastUpdateTime"])).ToString() + "\nLastWaterTime: " + DateTime.FromBinary(Convert.ToInt64(farmSlot["LastWaterTime"])).ToString() + "\nslotDryTime(日期): " + slotDryTime.ToString() + "\nrealWaterSpan(长度): " + realWaterSpan.ToString() + "\nhadWaterSpan(长度): " + hadWaterSpan + "\nneedWaterSpan: " + needWaterSpan);
+			}
 			while (true)
 			{
 				if (hadWaterSpan >= needWaterSpan) //如果累积湿润时间+新增湿润时间大于等于需要湿润时间，进入下一个阶段
