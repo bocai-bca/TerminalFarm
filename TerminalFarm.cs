@@ -15,7 +15,7 @@ namespace TerminalFarm
 {
 	internal static class TerminalFarmGame
 	{
-		internal const int VersionBVH = 1002;
+		internal const int VersionBVH = 1003;
 		internal enum PrintMessageLevel //输出信息警告规则
 		{
 			Info = 0, //一般信息。有时可能会返回无意中输出的异常
@@ -35,8 +35,8 @@ namespace TerminalFarm
 		internal static string MemoryCustomPath = "";
 		internal static bool IsGameStillRunning = true; //用于在主循环中结束循环
 
-        [RequiresUnreferencedCode("Calls System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, JsonSerializerOptions)")]
-        internal static void Main(string[] args) //入口点
+		[RequiresUnreferencedCode("Calls System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, JsonSerializerOptions)")]
+		internal static void Main(string[] args) //入口点
 		{
 			//获取游戏翻译文本的资源管理器
 			ResourceManager resMgrTranslatedText = new("TerminalFarm.TranslatedText", typeof(TerminalFarmGame).Assembly);
@@ -209,8 +209,8 @@ namespace TerminalFarm
 									break;
 								case "CLS":
 								case "CLEAR":
-                                    PrintMessage(translator.Translate("cmd_help_show_clear"), PrintMessageLevel.Info);
-                                    break;
+									PrintMessage(translator.Translate("cmd_help_show_clear"), PrintMessageLevel.Info);
+									break;
 								case "HELP":
 									PrintMessage(translator.Translate("cmd_help_show_help"), PrintMessageLevel.Info);
 									break;
@@ -1473,6 +1473,10 @@ namespace TerminalFarm
 				slotDryTime = DateTime.UtcNow; //钳制湿润截止时间到当前
 			}
 			TimeSpan realWaterSpan = slotDryTime - DateTime.FromBinary(Convert.ToInt64(farmSlot["LastUpdateTime"])); //计算从上次更新截至现在的湿润时间长度。当前到上次更新的时间
+			if (realWaterSpan < TimeSpan.Zero) //钳制，防止出现负湿润时间
+			{
+				realWaterSpan = TimeSpan.Zero;
+			}
 			TimeSpan hadWaterSpan = TimeSpan.FromTicks(Convert.ToInt64(farmSlot["HadWaterTime"])) + realWaterSpan; //读取累积湿润时间并加上新增湿润时间。可用于后续不断作减法
 			TimeSpan needWaterSpan = ItemsProperties[sourcePlantID].FarmSlotProperties.GrowTime; //读取对应作物总共需要的湿润时间
 			Console.WriteLine("debug:" + "\nLastUpdateTime: " + DateTime.FromBinary(Convert.ToInt64(farmSlot["LastUpdateTime"])).ToString() + "\nLastWaterTime: " + DateTime.FromBinary(Convert.ToInt64(farmSlot["LastWaterTime"])).ToString() + "\nslotDryTime(日期): " + slotDryTime.ToString() + "\nrealWaterSpan(长度): " + realWaterSpan.ToString() + "\nhadWaterSpan(长度): " + hadWaterSpan + "\nneedWaterSpan: " + needWaterSpan);
