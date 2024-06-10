@@ -362,9 +362,6 @@ Tree</value>
   <data name="en_cmd_swap_scene_need_arg" xml:space="preserve">
     <value>Current scene does not support this command without parameters, please retry with index number.</value>
   </data>
-  <data name="en_cmd_swap_scene_not_support" xml:space="preserve">
-    <value>Current scene does not support this command.</value>
-  </data>
   <data name="en_cmd_swap_scene_no_obj" xml:space="preserve">
     <value>Current scene has no items.</value>
   </data>
@@ -843,9 +840,6 @@ Tree    -  苹果树，会自动产出用于卖钱的苹果</value>
   </data>
   <data name="zh_cmd_swap_scene_need_arg" xml:space="preserve">
     <value>当前场景不支持不带参数使用此命令，请伴随索引序号使用.</value>
-  </data>
-  <data name="zh_cmd_swap_scene_not_support" xml:space="preserve">
-    <value>当前场景不支持此命令.</value>
   </data>
   <data name="zh_cmd_swap_scene_no_obj" xml:space="preserve">
     <value>当前场景没有对象可用.</value>

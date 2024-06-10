@@ -15,7 +15,7 @@ namespace TerminalFarm
 {
 	internal static class TerminalFarmGame
 	{
-		internal const int VersionBVH = 1004;
+		internal const int VersionBVH = 1005;
 		internal enum PrintMessageLevel //输出信息警告规则
 		{
 			Info = 0, //一般信息。有时可能会返回无意中输出的异常
@@ -178,7 +178,7 @@ namespace TerminalFarm
 						Console.ResetColor();
 					}
 				}
-				Console.Write("]" + translator.Translate("scene_name_" + (string)SceneData[CurrentScene]["SceneName"]) + "> ");
+				Console.Write("]" + translator.Translate("scene_name_" + (string)SceneData[CurrentScene]["SceneName"]) + "." + (CurrentPage + 1).ToString() + "> ");
 				//
 				bool shouldSave = false; //命令执行完毕是否保存
 				string[] inputSplited = (Console.ReadLine() ?? "").Trim().Split(' ', 2); //取得输入并分解成字符串数组
@@ -901,7 +901,7 @@ namespace TerminalFarm
 										}
 										break;
 									case 4: //市场
-										PrintMessage(translator.Translate("cmd_swap_scene_not_support"), PrintMessageLevel.Warning);
+										PrintMessage(translator.Translate("cmd_swap_scene_cannot_arg"), PrintMessageLevel.Warning);
 										break;
 									case 5: //苹果树
 										PrintMessage(translator.Translate("cmd_swap_scene_cannot_arg"), PrintMessageLevel.Warning);
@@ -938,7 +938,7 @@ namespace TerminalFarm
 									try
 									{
 										int money = (int)MemoryGameData["Money"];
-										price = ItemsProperties[id].MarketItemProperties.NowPrice;
+										price = StoreItemsIDPage1.Contains(id) ? 0 : ItemsProperties[id].MarketItemProperties.NowPrice;
 										money += price;
 										MemoryGameData["Money"] = money;
 										MemoryGameData["TakingItemID"] = 0;
@@ -1442,29 +1442,23 @@ namespace TerminalFarm
 				//补货
 				for (int i = 0; i < 6; i++) //第一页，随机上架作物种子
 				{
-					if ((int)((Dictionary<string, object>)slots[i])["ItemID"] == 0) //如果格子是空的
-					{
-						int itemID = StoreItemsIDPage1[mainRandom.Next(0, StoreItemsIDPage1.Count)];
-						((Dictionary<string, object>)slots[i])["ItemID"] = itemID;
-						((Dictionary<string, object>)slots[i])["Price"] = ItemsProperties[itemID].MarketItemProperties.NowPrice;
-					}
+					int itemID = StoreItemsIDPage1[mainRandom.Next(0, StoreItemsIDPage1.Count)];
+					((Dictionary<string, object>)slots[i])["ItemID"] = itemID;
+					((Dictionary<string, object>)slots[i])["Price"] = ItemsProperties[itemID].MarketItemProperties.NowPrice;
 				}
 				//第二页
-				if ((int)((Dictionary<string, object>)slots[6 + 0])["ItemID"] != 2)
-				{
-					((Dictionary<string, object>)slots[6 + 0])["ItemID"] = 2;
-					((Dictionary<string, object>)slots[6 + 0])["Price"] = ItemsProperties[2].MarketItemProperties.NowPrice * 2;
-					((Dictionary<string, object>)slots[6 + 1])["ItemID"] = 3;
-					((Dictionary<string, object>)slots[6 + 1])["Price"] = ItemsProperties[3].MarketItemProperties.NowPrice * 2;
-					((Dictionary<string, object>)slots[6 + 2])["ItemID"] = 4;
-					((Dictionary<string, object>)slots[6 + 2])["Price"] = ItemsProperties[4].MarketItemProperties.NowPrice * 2;
-					((Dictionary<string, object>)slots[6 + 3])["ItemID"] = 5;
-					((Dictionary<string, object>)slots[6 + 3])["Price"] = ItemsProperties[5].MarketItemProperties.NowPrice * 2;
-					((Dictionary<string, object>)slots[6 + 4])["ItemID"] = 39;
-					((Dictionary<string, object>)slots[6 + 4])["Price"] = ItemsProperties[39].MarketItemProperties.NowPrice * 2;
-					((Dictionary<string, object>)slots[6 + 5])["ItemID"] = 40;
-					((Dictionary<string, object>)slots[6 + 5])["Price"] = ItemsProperties[40].MarketItemProperties.NowPrice * 2; //这里只起到初始化存档中的第二页的作用，重新补货的价格由升级直接修改，而不是这里
-				}
+				((Dictionary<string, object>)slots[6 + 0])["ItemID"] = 2;
+				((Dictionary<string, object>)slots[6 + 0])["Price"] = ItemsProperties[2].MarketItemProperties.NowPrice * 2;
+				((Dictionary<string, object>)slots[6 + 1])["ItemID"] = 3;
+				((Dictionary<string, object>)slots[6 + 1])["Price"] = ItemsProperties[3].MarketItemProperties.NowPrice * 2;
+				((Dictionary<string, object>)slots[6 + 2])["ItemID"] = 4;
+				((Dictionary<string, object>)slots[6 + 2])["Price"] = ItemsProperties[4].MarketItemProperties.NowPrice * 2;
+				((Dictionary<string, object>)slots[6 + 3])["ItemID"] = 5;
+				((Dictionary<string, object>)slots[6 + 3])["Price"] = ItemsProperties[5].MarketItemProperties.NowPrice * 2;
+				((Dictionary<string, object>)slots[6 + 4])["ItemID"] = 39;
+				((Dictionary<string, object>)slots[6 + 4])["Price"] = ItemsProperties[39].MarketItemProperties.NowPrice * 2;
+				((Dictionary<string, object>)slots[6 + 5])["ItemID"] = 40;
+				((Dictionary<string, object>)slots[6 + 5])["Price"] = ItemsProperties[40].MarketItemProperties.NowPrice * 2; //这里只起到初始化存档中的第二页的作用，重新补货的价格由升级直接修改，而不是这里
 			}
 			return result;
 		}
