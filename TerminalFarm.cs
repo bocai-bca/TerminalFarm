@@ -15,7 +15,7 @@ namespace TerminalFarm
 {
 	internal static class TerminalFarmGame
 	{
-		internal const int VersionBVH = 1006;
+		internal const int VersionBVH = 1007;
 		internal enum PrintMessageLevel //输出信息警告规则
 		{
 			Info = 0, //一般信息。有时可能会返回无意中输出的异常
@@ -540,7 +540,8 @@ namespace TerminalFarm
 								currentSceneSlots = (List<object>)currentSceneData["Slots"];
 								for (int i = 0; i < 6; i++)
 								{
-									ItemProperties currentItemData = ItemsProperties[(int)((Dictionary<string, object>)currentSceneSlots[i + 6 * CurrentPage])["ItemID"]];
+									int itemID = (int)((Dictionary<string, object>)currentSceneSlots[i + 6 * CurrentPage])["ItemID"];
+									ItemProperties currentItemData = ItemsProperties[itemID];
 									int price = (int)((Dictionary<string, object>)currentSceneSlots[i + 6 * CurrentPage])["Price"];
 									float maxPriceDiff = (currentItemData.MarketItemProperties.MaxPrice - currentItemData.MarketItemProperties.MinPrice) / 2.0f;
 									float normalPrice = maxPriceDiff + currentItemData.MarketItemProperties.MinPrice;
@@ -567,9 +568,10 @@ namespace TerminalFarm
 										translator.Translate("item_name_" + currentItemData.Name),
 										PrintSlotType.OutputOnly,
 										currentItemData.TextColor,
+										itemID != 0,
 										price,
 										quoteRate
-									); ;
+									);
 								}
 								break;
 							case 3: //花园
@@ -664,7 +666,8 @@ namespace TerminalFarm
 							case 4: //市场
 								for (int i = 0; i < 6; i++)
 								{
-									ItemProperties currentItemData = ItemsProperties[MarketItemList[i + 6 * CurrentPage]];
+									int itemID = MarketItemList[i + 6 * CurrentPage];
+									ItemProperties currentItemData = ItemsProperties[itemID];
 									int price = currentItemData.MarketItemProperties.NowPrice;
 									float maxPriceDiff = (currentItemData.MarketItemProperties.MaxPrice - currentItemData.MarketItemProperties.MinPrice) / 2.0f;
 									float normalPrice = maxPriceDiff + currentItemData.MarketItemProperties.MinPrice;
@@ -676,6 +679,7 @@ namespace TerminalFarm
 										translator.Translate("item_name_" + currentItemData.Name),
 										PrintSlotType.None,
 										currentItemData.TextColor,
+										itemID != 0,
 										price,
 										quoteRate,
 										(int)currentSceneData["UpgradedTimes"] == 1,
@@ -1692,7 +1696,7 @@ namespace TerminalFarm
 			Console.ResetColor();
 			Console.Write(postfix + "\n");
 		}
-		internal static void PrintItemPrice(int indexNum, string translatedName, PrintSlotType slotType, ConsoleColor itemColor, int price, float priceRate, bool displayNextDay = false, string traslatedTomorrow = "", int nextDayPrice = 0, float nextDayRate = 0.0f)
+		internal static void PrintItemPrice(int indexNum, string translatedName, PrintSlotType slotType, ConsoleColor itemColor, bool displayPrice = true, int price = 0, float priceRate = 0.0f, bool displayNextDay = false, string traslatedTomorrow = "", int nextDayPrice = 0, float nextDayRate = 0.0f)
 		{   //用于输出单行物品
 			string outputIndex = "";
 			if (indexNum >= 0)
@@ -1752,6 +1756,11 @@ namespace TerminalFarm
 					break;
 			}
 			Console.ResetColor();
+			if (!displayPrice)
+			{
+				Console.Write("\n");
+				return;
+			}
 			Console.Write(" --- " + price.ToString() + "  ");
 			if (priceRate > 0.0f)
 			{
