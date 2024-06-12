@@ -1,3 +1,4 @@
+丑话说前头，可能有bug，可以投到Issues里  
 # 🎉欢迎  
 终端农场，一个命令行种田游戏。  
 游戏灵感启发自 **半屏挂机农场游戏《[Rusty's Retirement](https://store.steampowered.com/app/2666510/Rustys_Retirement/)》** 的前期低操作挂机农场设计和 **高难度多人合作恐怖射击游戏《[GTFO](https://store.steampowered.com/app/493520/GTFO/)》** 的用于查询信息和查找与定位游戏关键物品、资源道具的以命令行的形式交互的终端电脑。  
