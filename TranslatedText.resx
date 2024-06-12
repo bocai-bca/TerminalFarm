@@ -356,6 +356,9 @@ Tree</value>
   <data name="en_cmd_swap_index_out_of_bound" xml:space="preserve">
     <value>The index number is out of bound.</value>
   </data>
+  <data name="en_cmd_swap_not_a_number" xml:space="preserve">
+    <value>The input parameters are not a number.</value>
+  </data>
   <data name="en_cmd_swap_scene_cannot_arg" xml:space="preserve">
     <value>Current scene does not support this command with parameters.</value>
   </data>
@@ -419,6 +422,9 @@ Tree</value>
   </data>
   <data name="en_cmd_use_need_arg" xml:space="preserve">
     <value>Missing parameters.</value>
+  </data>
+  <data name="en_cmd_use_not_a_number" xml:space="preserve">
+    <value>The input parameters are not a number.</value>
   </data>
   <data name="en_cmd_use_scene_is_not_farm" xml:space="preserve">
     <value>This command can only use in Farm.</value>
@@ -835,6 +841,9 @@ Tree    -  苹果树，会自动产出用于卖钱的苹果</value>
   <data name="zh_cmd_swap_index_out_of_bound" xml:space="preserve">
     <value>索引序号超出范围.</value>
   </data>
+  <data name="zh_cmd_swap_not_a_number" xml:space="preserve">
+    <value>输入的参数不是数字.</value>
+  </data>
   <data name="zh_cmd_swap_scene_cannot_arg" xml:space="preserve">
     <value>当前场景的此命令不可跟随参数.</value>
   </data>
@@ -899,6 +908,9 @@ Tree    -  苹果树，会自动产出用于卖钱的苹果</value>
   </data>
   <data name="zh_cmd_use_need_arg" xml:space="preserve">
     <value>缺少参数.</value>
+  </data>
+  <data name="zh_cmd_use_not_a_number" xml:space="preserve">
+    <value>输入的参数不是数字.</value>
   </data>
   <data name="zh_cmd_use_scene_is_not_farm" xml:space="preserve">
     <value>此命令仅可在农田中使用.</value>

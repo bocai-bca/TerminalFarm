@@ -86,7 +86,7 @@ namespace TerminalFarm
 				get
 				{
 					Random tempRandom = new(Convert.ToInt32((DateTime.Now.Date - DateTime.MinValue).Days * SeedMulti) + SeedOffset);
-					int result = tempRandom.Next(MinPrice, MaxPrice);
+					int result = tempRandom.Next(MinPrice, MaxPrice + 1);
 					if (PriceReverse)
 					{
 						result = MinPrice + (MaxPrice - result);
@@ -920,7 +920,7 @@ namespace TerminalFarm
 			{ 33, new ItemProperties
 				{
 					Name = "cyan_flower",
-					TextColor = ConsoleColor.DarkCyan,
+					TextColor = ConsoleColor.Cyan,
 					FarmSlotProperties = new FarmSlotItemProperties
 					{
 						SlotType = PrintSlotType.FarmCollectable, //物品在农田的默认边框

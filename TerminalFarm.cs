@@ -178,7 +178,7 @@ namespace TerminalFarm
 						Console.ResetColor();
 					}
 				}
-				Console.Write("]" + translator.Translate("scene_name_" + (string)SceneData[CurrentScene]["SceneName"]) + "." + (CurrentPage + 1).ToString() + "> ");
+				Console.Write("]" + translator.Translate("scene_name_" + (string)SceneData[CurrentScene]["SceneName"]) + "|" + (CurrentPage + 1).ToString() + "> ");
 				//
 				bool shouldSave = false; //命令执行完毕是否保存
 				string[] inputSplited = (Console.ReadLine() ?? "").Trim().Split(' ', 2); //取得输入并分解成字符串数组
@@ -536,19 +536,40 @@ namespace TerminalFarm
 								}
 								break;
 							case 2: //商店
-								((List<object>)MemoryGameData["ScenesData"])[CurrentScene] = UpdateStore(currentSceneData);
+								((List<object>)MemoryGameData["ScenesData"])[CurrentScene] = UpdateStore(currentSceneData, IsDebuging);
 								currentSceneSlots = (List<object>)currentSceneData["Slots"];
 								for (int i = 0; i < 6; i++)
 								{
 									ItemProperties currentItemData = ItemsProperties[(int)((Dictionary<string, object>)currentSceneSlots[i + 6 * CurrentPage])["ItemID"]];
-									PrintItem(
+									int price = (int)((Dictionary<string, object>)currentSceneSlots[i + 6 * CurrentPage])["Price"];
+									float maxPriceDiff = (currentItemData.MarketItemProperties.MaxPrice - currentItemData.MarketItemProperties.MinPrice) / 2.0f;
+									float normalPrice = maxPriceDiff + currentItemData.MarketItemProperties.MinPrice;
+									if (CurrentPage == 1)
+									{
+										if (i == 5) //为重新补货
+										{
+											PrintItem(
+												i,
+												translator.Translate("item_name_" + currentItemData.Name),
+												PrintSlotType.OutputOnly,
+												currentItemData.TextColor,
+												" --- " + price.ToString(),
+												false
+											);
+											continue;
+										}
+										normalPrice *= 2;
+										maxPriceDiff *= 2;
+									}
+									float quoteRate = (price - normalPrice) / maxPriceDiff;
+									PrintItemPrice(
 										i,
 										translator.Translate("item_name_" + currentItemData.Name),
 										PrintSlotType.OutputOnly,
 										currentItemData.TextColor,
-										" --- " + ((Dictionary<string, object>)currentSceneSlots[i + 6 * CurrentPage])["Price"].ToString(),
-										false
-									);
+										price,
+										quoteRate
+									); ;
 								}
 								break;
 							case 3: //花园
@@ -644,18 +665,23 @@ namespace TerminalFarm
 								for (int i = 0; i < 6; i++)
 								{
 									ItemProperties currentItemData = ItemsProperties[MarketItemList[i + 6 * CurrentPage]];
-									string priceBar = " --- " + currentItemData.MarketItemProperties.NowPrice.ToString();
-									if ((int)currentSceneData["UpgradedTimes"] == 1)
-									{
-										priceBar += translator.Translate("market_tomorrow_text") + currentItemData.MarketItemProperties.NextDayPrice.ToString();
-									}
-									PrintItem(
+									int price = currentItemData.MarketItemProperties.NowPrice;
+									float maxPriceDiff = (currentItemData.MarketItemProperties.MaxPrice - currentItemData.MarketItemProperties.MinPrice) / 2.0f;
+									float normalPrice = maxPriceDiff + currentItemData.MarketItemProperties.MinPrice;
+									float quoteRate = (price - normalPrice) / maxPriceDiff;
+									int nextPrice = currentItemData.MarketItemProperties.NextDayPrice;
+									float nextQuoteRate = (nextPrice - normalPrice) / maxPriceDiff;
+									PrintItemPrice(
 										i,
 										translator.Translate("item_name_" + currentItemData.Name),
 										PrintSlotType.None,
 										currentItemData.TextColor,
-										priceBar,
-										false
+										price,
+										quoteRate,
+										(int)currentSceneData["UpgradedTimes"] == 1,
+										translator.Translate("market_tomorrow_text"),
+										nextPrice,
+										nextQuoteRate
 									);
 								}
 								break;
@@ -743,7 +769,11 @@ namespace TerminalFarm
 						bool isSuccess = true;
 						if (hasArgs)
 						{
-							int argIndex = Convert.ToInt32(inputSplited[1]);
+							if (!int.TryParse(inputSplited[1] ?? "1", out int argIndex))
+							{
+								PrintMessage(translator.Translate("cmd_page_not_a_number"), PrintMessageLevel.Warning);
+								break;
+							}
 							if (!(0 <= argIndex && argIndex <= 5))
 							{
 								PrintMessage(translator.Translate("cmd_swap_index_out_of_bound"), PrintMessageLevel.Warning);
@@ -1181,7 +1211,11 @@ namespace TerminalFarm
 								PrintMessage(translator.Translate("cmd_use_item_cannot_use"), PrintMessageLevel.Warning);
 								break;
 							}
-							int argIndex = Convert.ToInt32(inputSplited[1]);
+							if (!int.TryParse(inputSplited[1] ?? "1", out int argIndex))
+							{
+								PrintMessage(translator.Translate("cmd_page_not_a_number"), PrintMessageLevel.Warning);
+								break;
+							}
 							if (!(0 <= argIndex && argIndex <= 5)) //如果超出格子索引范围，阻断
 							{
 								PrintMessage(translator.Translate("cmd_use_index_out_of_bound"), PrintMessageLevel.Warning);
@@ -1422,7 +1456,7 @@ namespace TerminalFarm
 			result["LastTimeGotApple"] = lastDropTime.ToBinary().ToString();
 			return result;
 		}
-		internal static Dictionary<string, object> UpdateStore(Dictionary<string, object> storeData) //传入整个商店的数据，返回更新至当前时间的商店
+		internal static Dictionary<string, object> UpdateStore(Dictionary<string, object> storeData, bool forceRestock = false) //传入整个商店的数据，返回更新至当前时间的商店
 		{
 			Dictionary<string, object> result = new(storeData);
 			DateTime lastUpdateTime = DateTime.FromBinary(Convert.ToInt64(storeData["LastUpdateTime"])); //商店上次更新时间，如果上次更新时间至当前时间经过了一个8:00，那么重置商店
@@ -1435,7 +1469,7 @@ namespace TerminalFarm
 			{
 				refillTimeShouldUse = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day - 1, 8, 0, 0);
 			}
-			if ((DateTime.Now - lastUpdateTime) >= (DateTime.Now - refillTimeShouldUse))
+			if ((DateTime.Now - lastUpdateTime) >= (DateTime.Now - refillTimeShouldUse) || forceRestock)
 			{
 				result["LastUpdateTime"] = DateTime.Now.ToBinary().ToString();
 				List<object> slots = (List<object>)result["Slots"];
@@ -1457,8 +1491,11 @@ namespace TerminalFarm
 				((Dictionary<string, object>)slots[6 + 3])["Price"] = ItemsProperties[5].MarketItemProperties.NowPrice * 2;
 				((Dictionary<string, object>)slots[6 + 4])["ItemID"] = 39;
 				((Dictionary<string, object>)slots[6 + 4])["Price"] = ItemsProperties[39].MarketItemProperties.NowPrice * 2;
-				((Dictionary<string, object>)slots[6 + 5])["ItemID"] = 40;
-				((Dictionary<string, object>)slots[6 + 5])["Price"] = ItemsProperties[40].MarketItemProperties.NowPrice * 2; //这里只起到初始化存档中的第二页的作用，重新补货的价格由升级直接修改，而不是这里
+				if (((Dictionary<string, object>)slots[6 + 5]).TryGetValue("ItemID", out object? _))
+				{
+					((Dictionary<string, object>)slots[6 + 5])["ItemID"] = 40;
+					((Dictionary<string, object>)slots[6 + 5])["Price"] = ItemsProperties[40].MarketItemProperties.NowPrice * 2; //这里只起到初始化存档中的第二页的作用，重新补货的价格由升级直接修改，而不是这里
+				}
 			}
 			return result;
 		}
@@ -1654,6 +1691,95 @@ namespace TerminalFarm
 			}
 			Console.ResetColor();
 			Console.Write(postfix + "\n");
+		}
+		internal static void PrintItemPrice(int indexNum, string translatedName, PrintSlotType slotType, ConsoleColor itemColor, int price, float priceRate, bool displayNextDay = false, string traslatedTomorrow = "", int nextDayPrice = 0, float nextDayRate = 0.0f)
+		{   //用于输出单行物品
+			string outputIndex = "";
+			if (indexNum >= 0)
+			{
+				outputIndex = indexNum.ToString();
+			}
+			outputIndex = outputIndex.PadRight(4);
+			Console.Write(outputIndex);
+			switch (slotType)
+			{
+				case PrintSlotType.None:
+					Console.Write(" ");
+					break;
+				case PrintSlotType.Interactive:
+					Console.Write("[");
+					break;
+				case PrintSlotType.InputOnly:
+					Console.Write(">");
+					break;
+				case PrintSlotType.OutputOnly:
+					Console.Write("<");
+					break;
+				case PrintSlotType.FarmGrowing:
+					Console.Write("(");
+					break;
+				case PrintSlotType.FarmCollectable:
+					Console.Write("{");
+					break;
+				default:
+					break;
+			}
+			Console.ResetColor();
+			Console.ForegroundColor = itemColor;
+			Console.Write(translatedName);
+			Console.ResetColor();
+			switch (slotType)
+			{
+				case PrintSlotType.None:
+					Console.Write(" ");
+					break;
+				case PrintSlotType.Interactive:
+					Console.Write("]");
+					break;
+				case PrintSlotType.InputOnly:
+					Console.Write("<");
+					break;
+				case PrintSlotType.OutputOnly:
+					Console.Write(">");
+					break;
+				case PrintSlotType.FarmGrowing:
+					Console.Write(")");
+					break;
+				case PrintSlotType.FarmCollectable:
+					Console.Write("}");
+					break;
+				default:
+					break;
+			}
+			Console.ResetColor();
+			Console.Write(" --- " + price.ToString() + "  ");
+			if (priceRate > 0.0f)
+			{
+				Console.ForegroundColor = ConsoleColor.Red;
+				Console.Write("+");
+			}
+			else if (priceRate < 0.0f)
+			{
+				Console.ForegroundColor = ConsoleColor.Green;
+			}
+			Console.Write(((int)(priceRate * 100.0f)).ToString() + "%");
+			Console.ResetColor();
+			if (displayNextDay)
+			{
+				Console.Write("    " + traslatedTomorrow + nextDayPrice.ToString() + "  ");
+				if (nextDayRate > 0.0f)
+				{
+					Console.ForegroundColor = ConsoleColor.Red;
+					Console.Write("+");
+				}
+				else if (nextDayRate < 0.0f)
+				{
+					Console.ForegroundColor = ConsoleColor.Green;
+				}
+				Console.Write(((int)(nextDayRate * 100.0f)).ToString() + "%");
+				Console.ResetColor();
+			}
+			Console.Write("\n");
 		}
 		private static Dictionary<string, object>? GameDataInit()
 		{
