@@ -15,7 +15,7 @@ namespace TerminalFarm
 {
 	internal static class TerminalFarmGame
 	{
-		internal const int VersionBVH = 1007;
+		internal const int VersionBVH = 1008;
 		internal enum PrintMessageLevel //输出信息警告规则
 		{
 			Info = 0, //一般信息。有时可能会返回无意中输出的异常
@@ -894,7 +894,7 @@ namespace TerminalFarm
 												for (int i = 6; i < 11; i++) //第二页，刷新物品价格
 												{
 													int itemID = (int)((Dictionary<string, object>)currentSceneSlots[i])["ItemID"];
-													((Dictionary<string, object>)currentSceneSlots[i])["Price"] = ItemsProperties[itemID].MarketItemProperties.NowPrice;
+													((Dictionary<string, object>)currentSceneSlots[i])["Price"] = ItemsProperties[itemID].MarketItemProperties.NowPrice * 2;
 												}
 												((Dictionary<string, object>)currentSceneSlots[11])["Price"] = ItemsProperties[40].MarketItemProperties.NowPrice - 20 * (int)currentSceneData["UpgradedTimes"];
 												break;
@@ -1356,7 +1356,7 @@ namespace TerminalFarm
 						if (CurrentScene == 2) //如果为商店
 						{
 							((List<object>)MemoryGameData["ScenesData"])[CurrentScene] = UpdateStore(currentSceneData);
-							((Dictionary<string, object>)((List<object>)currentSceneData["Slots"])[11])["Price"] = ItemsProperties[40].MarketItemProperties.NowPrice * (2.0f - 0.25f * hadUpgradeTimes);
+							((Dictionary<string, object>)((List<object>)currentSceneData["Slots"])[11])["Price"] = (int)(ItemsProperties[40].MarketItemProperties.NowPrice * (2.0f - 0.25f * hadUpgradeTimes));
 						}
 						if (CurrentScene == 5) //如果为苹果树
 						{
