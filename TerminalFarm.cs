@@ -15,7 +15,7 @@ namespace TerminalFarm
 {
 	internal static class TerminalFarmGame
 	{
-		internal const int VersionBVH = 1008;
+		internal const int VersionBVH = 1009;
 		internal enum PrintMessageLevel //输出信息警告规则
 		{
 			Info = 0, //一般信息。有时可能会返回无意中输出的异常
@@ -835,6 +835,7 @@ namespace TerminalFarm
 											{
 												//如果目标格子的物品ID是不能Swap的，报错
 												PrintMessage(String.Format(translator.Translate("cmd_swap_target_cannot_swap"), argIndex), PrintMessageLevel.Warning);
+												isSuccess = false;
 											}
 											else
 											{
