@@ -257,6 +257,7 @@ HELP
 LANG
 LIST
 LOAD
+PAGE
 SAVE
 SWAP
 USE</value>
@@ -741,6 +742,7 @@ HELP    -  显示帮助或命令信息
 LANG    -  切换语言
 LIST    -  列出特定列表
 LOAD    -  读取存档
+PAGE    -  显示场景的指定页面
 SAVE    -  保存存档
 SWAP    -  与格子交换物品
 UPGRADE    -  升级当前场景

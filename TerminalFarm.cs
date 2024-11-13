@@ -15,7 +15,7 @@ namespace TerminalFarm
 {
 	internal static class TerminalFarmGame
 	{
-		internal const int VersionBVH = 1009;
+		internal const string VersionBVH = "100A";
 		internal enum PrintMessageLevel //输出信息警告规则
 		{
 			Info = 0, //一般信息。有时可能会返回无意中输出的异常
