@@ -15,7 +15,7 @@ namespace TerminalFarm
 {
 	internal static class TerminalFarmGame
 	{
-		internal const string VersionBVH = "100A";
+		internal const string VersionBVH = "100B";
 		internal enum PrintMessageLevel //输出信息警告规则
 		{
 			Info = 0, //一般信息。有时可能会返回无意中输出的异常
@@ -461,6 +461,7 @@ namespace TerminalFarm
 							PrintMessage(translator.Translate("cmd_list_no_args"), PrintMessageLevel.Info);
 						}
 						break;
+					case "P":
 					case "DIR":
 					case "PAGE": //PAGE命令
 						if (MemoryGameData == null)
@@ -535,7 +536,7 @@ namespace TerminalFarm
 									);
 								}
 								break;
-							case 2: //商店
+							case 2: //商店，显示商店工具页物品的时候，工具的价格会比数据集中物品属性的价格贵一倍
 								((List<object>)MemoryGameData["ScenesData"])[CurrentScene] = UpdateStore(currentSceneData, IsDebuging);
 								currentSceneSlots = (List<object>)currentSceneData["Slots"];
 								for (int i = 0; i < 6; i++)
@@ -775,7 +776,7 @@ namespace TerminalFarm
 						{
 							if (!int.TryParse(inputSplited[1] ?? "1", out int argIndex))
 							{
-								PrintMessage(translator.Translate("cmd_page_not_a_number"), PrintMessageLevel.Warning);
+								PrintMessage(translator.Translate("cmd_swap_not_a_number"), PrintMessageLevel.Warning);
 								break;
 							}
 							if (!(0 <= argIndex && argIndex <= 5))
@@ -1201,7 +1202,7 @@ namespace TerminalFarm
 							PrintMessage(translator.Translate("cmd_goto_no_args"), PrintMessageLevel.Info);
 						}
 						break;
-					case "D":
+					case "U":
 					case "USE":
 						if (MemoryGameData == null)
 						{
@@ -1367,6 +1368,61 @@ namespace TerminalFarm
 							}
 						}
 						PrintMessage(String.Format(translator.Translate("cmd_upgrade_success"), translator.Translate("scene_name_" + SceneData[CurrentScene]["SceneName"])), PrintMessageLevel.Info);
+						break;
+					case "SELL": //SELL命令
+						if (MemoryGameData == null)
+						{
+							PrintMessage(translator.Translate("gamesave_null_error"), PrintMessageLevel.Error);
+							break;
+						}
+						//cS初始赋值(相当于声明)
+						currentSceneData = (Dictionary<string, object>)((List<object>)MemoryGameData["ScenesData"])[CurrentScene];
+						currentSceneSlots = (List<object>)currentSceneData["Slots"];
+						isSuccess = true;
+						if (hasArgs)
+						{
+							if (!int.TryParse(inputSplited[1] ?? "1", out int argIndex))
+							{
+								PrintMessage(translator.Translate("cmd_sell_not_a_number"), PrintMessageLevel.Warning);
+								break;
+							}
+							/*if (!(0 <= argIndex && argIndex <= 5))
+							{
+								PrintMessage(translator.Translate("cmd_sell_index_out_of_bound"), PrintMessageLevel.Warning);
+							}*/
+							else
+							{
+
+							}
+						}
+						else
+						{
+							int id = (int)MemoryGameData["TakingItemID"];
+							int price = 0;
+							if (id == 0) //如果手持为空
+							{
+								PrintMessage(translator.Translate("cmd_sell_hand_empty"), PrintMessageLevel.Warning);
+								break;
+							}
+							try
+							{
+								int money = (int)MemoryGameData["Money"];
+								price = StoreItemsIDPage1.Contains(id) ? 0 : ItemsProperties[id].MarketItemProperties.NowPrice;
+								money += price;
+								MemoryGameData["Money"] = money;
+								MemoryGameData["TakingItemID"] = 0;
+							}
+							catch (Exception ex)
+							{
+								PrintMessage(String.Format("[{0}] Error : \n", translator.Translate("game_title")) + ex.ToString() + "\n", PrintMessageLevel.Fatal);
+								isSuccess = false;
+							}
+							if (isSuccess)
+							{
+								shouldSave = true;
+								PrintMessage(String.Format(translator.Translate("cmd_swap_success_market"), price), PrintMessageLevel.Info);
+							}
+						}
 						break;
 					default:
 						PrintMessage(String.Format(translator.Translate("unknown_cmd"), inputSplited[0]), PrintMessageLevel.Warning);
