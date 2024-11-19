@@ -19,8 +19,8 @@ namespace TerminalFarm
 		internal enum PrintMessageLevel //输出信息警告规则
 		{
 			Info = 0, //一般信息。有时可能会返回无意中输出的异常
-			Warning = 1, //执行输入的命令时有问题，但被已有应对手段无害处理
-			Error = 2, //运行过程出现故障，但被已有应对手段无害处理
+			Warning = 1, //执行输入的游戏命令时有问题，但被已有应对手段无害处理
+			Error = 2, //运行过程出现故障，但被已有应对手段无害处理。例如内存存档为null、无法读写存档文件
 			Fatal = 3 //输出程序本身通过异常处理语句捕获到的异常
 		}
 		internal static Dictionary<int, string> DisplayLanguage = new()
@@ -230,12 +230,16 @@ namespace TerminalFarm
 								case "GOTO":
 									PrintMessage(translator.Translate("cmd_help_show_goto"), PrintMessageLevel.Info);
 									break;
+								case "P":
 								case "DIR":
 								case "PAGE":
 									PrintMessage(translator.Translate("cmd_help_show_page"), PrintMessageLevel.Info);
 									break;
 								case "SAVE":
 									PrintMessage(translator.Translate("cmd_help_show_save"), PrintMessageLevel.Info);
+									break;
+								case "SELL":
+									PrintMessage(translator.Translate("cmd_help_show_sell"), PrintMessageLevel.Info);
 									break;
 								case "S":
 								case "SWAP":
@@ -248,7 +252,7 @@ namespace TerminalFarm
 								case "UPGRADE":
 									PrintMessage(translator.Translate("cmd_help_show_upgrade"), PrintMessageLevel.Info);
 									break;
-								case "D":
+								case "U":
 								case "USE":
 									PrintMessage(translator.Translate("cmd_help_show_use"), PrintMessageLevel.Info);
 									break;
@@ -472,7 +476,7 @@ namespace TerminalFarm
 						if (hasArgs)
 						{
 							//如果有参数
-							if (!int.TryParse(inputSplited[1] ?? "1", out int arg))
+							if (!int.TryParse(inputSplited[1] ?? "0", out int arg))
 							{
 								PrintMessage(translator.Translate("cmd_page_not_a_number"), PrintMessageLevel.Warning);
 								break;
@@ -774,7 +778,7 @@ namespace TerminalFarm
 						bool isSuccess = true;
 						if (hasArgs)
 						{
-							if (!int.TryParse(inputSplited[1] ?? "1", out int argIndex))
+							if (!int.TryParse(inputSplited[1] ?? "0", out int argIndex))
 							{
 								PrintMessage(translator.Translate("cmd_swap_not_a_number"), PrintMessageLevel.Warning);
 								break;
@@ -973,9 +977,8 @@ namespace TerminalFarm
 									}
 									try
 									{
-										int money = (int)MemoryGameData["Money"];
-										price = StoreItemsIDPage1.Contains(id) ? 0 : ItemsProperties[id].MarketItemProperties.NowPrice;
-										money += price;
+										price = StoreItemsIDPage1.Contains(id) ? 0 : ItemsProperties[id].MarketItemProperties.NowPrice; //三元运算符解释：id为种子？(是)价格为0：(否)从id的物品属性取得当前价格
+										int money = (int)MemoryGameData["Money"] + price; //获取内存存档的资金，并加上price
 										MemoryGameData["Money"] = money;
 										MemoryGameData["TakingItemID"] = 0;
 									}
@@ -1008,6 +1011,7 @@ namespace TerminalFarm
 										if (collected >= upgradedTimes + 1)
 										{
 											currentSceneData["LastTimeGotApple"] = DateTime.UtcNow.ToBinary().ToString();
+											//此处为实现效果：苹果格子存满后，新苹果掉落将不计时，直到拿走苹果以至有空间时，才从零开始为新苹果计时
 										}
 										MemoryGameData["TakingItemID"] = 1;
 										currentSceneData["AppleCollected"] = collected - 1;
@@ -1050,16 +1054,6 @@ namespace TerminalFarm
 							switch (arg)
 							{
 								case "I":
-									CurrentScene = 0;
-									CurrentPage = 0;
-									PrintMessage(
-										String.Format(
-											translator.Translate("cmd_goto_success"),
-											translator.Translate("scene_name_" + SceneData[CurrentScene]["SceneName"])
-										),
-										PrintMessageLevel.Info
-									);
-									break;
 								case "INVENTORY":
 									CurrentScene = 0;
 									CurrentPage = 0;
@@ -1072,16 +1066,6 @@ namespace TerminalFarm
 									);
 									break;
 								case "F":
-									CurrentScene = 1;
-									CurrentPage = 0;
-									PrintMessage(
-										String.Format(
-											translator.Translate("cmd_goto_success"),
-											translator.Translate("scene_name_" + SceneData[CurrentScene]["SceneName"])
-										),
-										PrintMessageLevel.Info
-									);
-									break;
 								case "FARM":
 									CurrentScene = 1;
 									CurrentPage = 0;
@@ -1094,17 +1078,6 @@ namespace TerminalFarm
 									);
 									break;
 								case "S":
-									CurrentScene = 2;
-									CurrentPage = 0;
-									((List<object>)MemoryGameData["ScenesData"])[CurrentScene] = UpdateStore((Dictionary<string, object>)((List<object>)MemoryGameData["ScenesData"])[CurrentScene]);
-									PrintMessage(
-										String.Format(
-											translator.Translate("cmd_goto_success"),
-											translator.Translate("scene_name_" + SceneData[CurrentScene]["SceneName"])
-										),
-										PrintMessageLevel.Info
-									);
-									break;
 								case "STORE":
 									CurrentScene = 2;
 									CurrentPage = 0;
@@ -1118,16 +1091,6 @@ namespace TerminalFarm
 									);
 									break;
 								case "G":
-									CurrentScene = 3;
-									CurrentPage = 0;
-									PrintMessage(
-										String.Format(
-											translator.Translate("cmd_goto_success"),
-											translator.Translate("scene_name_" + SceneData[CurrentScene]["SceneName"])
-										),
-										PrintMessageLevel.Info
-									);
-									break;
 								case "GARDEN":
 									CurrentScene = 3;
 									CurrentPage = 0;
@@ -1140,16 +1103,6 @@ namespace TerminalFarm
 									);
 									break;
 								case "M":
-									CurrentScene = 4;
-									CurrentPage = 0;
-									PrintMessage(
-										String.Format(
-											translator.Translate("cmd_goto_success"),
-											translator.Translate("scene_name_" + SceneData[CurrentScene]["SceneName"])
-										),
-										PrintMessageLevel.Info
-									);
-									break;
 								case "MARKET":
 									CurrentScene = 4;
 									CurrentPage = 0;
@@ -1162,16 +1115,6 @@ namespace TerminalFarm
 									);
 									break;
 								case "T":
-									CurrentScene = 5;
-									CurrentPage = 0;
-									PrintMessage(
-										String.Format(
-											translator.Translate("cmd_goto_success"),
-											translator.Translate("scene_name_" + SceneData[CurrentScene]["SceneName"])
-										),
-										PrintMessageLevel.Info
-									);
-									break;
 								case "TREE":
 									CurrentScene = 5;
 									CurrentPage = 0;
@@ -1217,7 +1160,7 @@ namespace TerminalFarm
 								PrintMessage(translator.Translate("cmd_use_item_cannot_use"), PrintMessageLevel.Warning);
 								break;
 							}
-							if (!int.TryParse(inputSplited[1] ?? "1", out int argIndex))
+							if (!int.TryParse(inputSplited[1] ?? "0", out int argIndex))
 							{
 								PrintMessage(translator.Translate("cmd_page_not_a_number"), PrintMessageLevel.Warning);
 								break;
@@ -1379,38 +1322,132 @@ namespace TerminalFarm
 						currentSceneData = (Dictionary<string, object>)((List<object>)MemoryGameData["ScenesData"])[CurrentScene];
 						currentSceneSlots = (List<object>)currentSceneData["Slots"];
 						isSuccess = true;
-						if (hasArgs)
+						if (hasArgs) //如果携带了参数
 						{
-							if (!int.TryParse(inputSplited[1] ?? "1", out int argIndex))
+							//如果携带的参数不是一个数字
+							if (!int.TryParse(inputSplited[1] ?? "0", out int argIndex))
 							{
+								//报错并退出命令switch
 								PrintMessage(translator.Translate("cmd_sell_not_a_number"), PrintMessageLevel.Warning);
 								break;
 							}
-							/*if (!(0 <= argIndex && argIndex <= 5))
+							else //否则(如果携带的是数字，可以使用argIndex表示参数所携带的索引数)
 							{
-								PrintMessage(translator.Translate("cmd_sell_index_out_of_bound"), PrintMessageLevel.Warning);
-							}*/
-							else
-							{
-
+								switch (CurrentScene) //匹配一下当前所在的场景
+								{
+									//第一类场景，可以任意出售
+									case 0: //仓库
+									case 1: //农田
+									case 3: //花园
+										if (!(0 <= argIndex && argIndex <= 5))
+										{
+											PrintMessage(translator.Translate("cmd_sell_index_out_of_bound"), PrintMessageLevel.Warning);
+										}
+										int price = 0;
+										try
+										{
+											int targetIndex = argIndex + 6 * CurrentPage; //取得当前输入的索引数在当前仓库格子数据的索引
+											Dictionary<string, object> targetItem = ((Dictionary<string, object>)currentSceneSlots[targetIndex]); //读取当前场景对应格子数据
+											int targetItemID = (int)targetItem["ItemID"]; //获取对应格子数据的物品id
+											if (targetItemID == 0) //如果指定的格子是空的
+											{
+												PrintMessage(translator.Translate("cmd_sell_slot_empty"), PrintMessageLevel.Warning); //报空格子警告
+												break; //退出场景switch
+											}
+											ItemProperties itemProperties = ItemsProperties[targetItemID];
+											if (!itemProperties.FarmSlotProperties.CanSwap) //如果该格子的物品在农田属性中不可swap
+											{
+												PrintMessage(String.Format(translator.Translate("cmd_sell_target_cannot_sell"), targetIndex), PrintMessageLevel.Warning); //报农田格子作物不可出售警告
+												break; //退出场景switch
+											}
+											targetItem["ItemID"] = 0; //将对应格子数据的物品id设为空
+											price = StoreItemsIDPage1.Contains(targetItemID) ? 0 : itemProperties.MarketItemProperties.NowPrice; //如果目标是种子就为0钱，否则获取目标的价格
+											int money = (int)MemoryGameData["Money"] + price; //获取内存存档的资金，并加上price
+											MemoryGameData["Money"] = money; //将money存回内存存档的资金
+										}
+										catch (Exception ex)
+										{
+											PrintMessage(String.Format("[{0}] Error : \n", translator.Translate("game_title")) + ex.ToString() + "\n", PrintMessageLevel.Fatal);
+											isSuccess = false;
+										}
+										if (isSuccess)
+										{
+											shouldSave = true;
+											PrintMessage(String.Format(translator.Translate("cmd_sell_success"), price), PrintMessageLevel.Info);
+										}
+										break;
+									//第二类场景，只能出售手持槽，因此在携带参数的这里报错
+									case 2: //商店
+									case 4: //市场
+										PrintMessage(translator.Translate("cmd_sell_scene_can_only_sell_hand"), PrintMessageLevel.Warning);
+										break;
+									//第三类场景，只有苹果树，可以任意出售，但参数不参与计算
+									case 5: //苹果树
+										if (argIndex != 0) //如果使用的参数不是数字0
+										{
+											PrintMessage(translator.Translate("cmd_sell_tree_can_only_sell_index_zero"), PrintMessageLevel.Warning);
+											break;
+										}
+										price = 0;
+										try
+										{
+											int collected = (int)currentSceneData["AppleCollected"]; //获取苹果数量
+											if (collected == 0) //如果苹果数量为0
+											{
+												//报错然后退出场景switch
+												PrintMessage(translator.Translate("cmd_sell_no_apple_in_tree"), PrintMessageLevel.Warning);
+												break;
+											}
+											int upgradedTimes = (int)currentSceneData["UpgradedTimes"]; //获取苹果树升级次数
+											if (collected >= upgradedTimes + 1) //如果苹果数量>=当前升级次数下能容纳的最大数量
+											{
+												currentSceneData["LastTimeGotApple"] = DateTime.UtcNow.ToBinary().ToString(); //将上次掉落苹果的时间设为现在
+												//此处为实现效果：苹果格子存满后，新苹果掉落将不计时，直到拿走苹果以至有空间时，才从零开始为新苹果计时
+											}
+											currentSceneData["AppleCollected"] = collected - 1; //将苹果数量-1
+											price = ItemsProperties[1].MarketItemProperties.NowPrice; //苹果的id为1，获取苹果的售价
+											int money = (int)MemoryGameData["Money"] + price; //获取内存存档的资金，并加上price
+											MemoryGameData["Money"] = money; //将money存回资金
+										}
+										catch (Exception ex)
+										{
+											PrintMessage(String.Format("[{0}] Error : \n", translator.Translate("game_title")) + ex.ToString() + "\n", PrintMessageLevel.Fatal);
+											isSuccess = false;
+										}
+										if (isSuccess)
+										{
+											shouldSave = true;
+											needGotoPage = true;
+											PrintMessage(String.Format(translator.Translate("cmd_sell_success"), price), PrintMessageLevel.Info);
+										}
+										break; //退出场景switch
+									default:
+										break;
+								}
+								if (needGotoPage)
+								{
+									hasArgs = false;
+									Console.WriteLine("");
+									goto case "PAGE";
+								}
+								break; //退出命令switch
 							}
 						}
-						else
+						else //如果没有携带参数
 						{
 							int id = (int)MemoryGameData["TakingItemID"];
-							int price = 0;
 							if (id == 0) //如果手持为空
 							{
-								PrintMessage(translator.Translate("cmd_sell_hand_empty"), PrintMessageLevel.Warning);
-								break;
+								PrintMessage(translator.Translate("cmd_sell_hand_empty"), PrintMessageLevel.Warning); //报手持为空警告
+								break; //退出命令switch
 							}
+							int price = 0;
 							try
 							{
-								int money = (int)MemoryGameData["Money"];
-								price = StoreItemsIDPage1.Contains(id) ? 0 : ItemsProperties[id].MarketItemProperties.NowPrice;
-								money += price;
+								price = StoreItemsIDPage1.Contains(id) ? 0 : ItemsProperties[id].MarketItemProperties.NowPrice; //如果目标是种子就为0钱，否则获取目标的价格
+								int money = (int)MemoryGameData["Money"] + price; //获取内存存档的资金，并加上price
 								MemoryGameData["Money"] = money;
-								MemoryGameData["TakingItemID"] = 0;
+								MemoryGameData["TakingItemID"] = 0; //清空手持槽
 							}
 							catch (Exception ex)
 							{
@@ -1420,7 +1457,7 @@ namespace TerminalFarm
 							if (isSuccess)
 							{
 								shouldSave = true;
-								PrintMessage(String.Format(translator.Translate("cmd_swap_success_market"), price), PrintMessageLevel.Info);
+								PrintMessage(String.Format(translator.Translate("cmd_sell_success"), price), PrintMessageLevel.Info);
 							}
 						}
 						break;
@@ -1504,18 +1541,18 @@ namespace TerminalFarm
 		}
 		internal static Dictionary<string, object> UpdateAppleTree(Dictionary<string, object> treeData) //传入整个苹果树的数据，返回更新至当前时间的苹果树
 		{
-			Dictionary<string, object> result = new(treeData);
-			int appleCollected = (int)result["AppleCollected"];
-			int upgradedTimes = (int)result["UpgradedTimes"];
-			DateTime lastDropTime = DateTime.FromBinary(Convert.ToInt64((string)result["LastTimeGotApple"]));
-			while (appleCollected < (upgradedTimes + 1) && (DateTime.UtcNow - lastDropTime) >= AppleTreeDropDefaultTimeSpan)
+			Dictionary<string, object> result = new(treeData); //从输入拷贝一份新的苹果树数据作为result
+			int appleCollected = (int)result["AppleCollected"]; //从result中读取AppleCollected，其意为当前苹果树中存在的苹果数量，collect指苹果树这个场景所收集的苹果
+			int upgradedTimes = (int)result["UpgradedTimes"]; //从result中读取UpgradedTimes，其意为苹果树已升级的次数
+			DateTime lastDropTime = DateTime.FromBinary(Convert.ToInt64((string)result["LastTimeGotApple"])); //从result中读取LastTimeGotApple并反序列化为DateTime数据，其意为苹果树上一次产生苹果的现实时间
+			while (appleCollected < (upgradedTimes + 1) && (DateTime.UtcNow - lastDropTime) >= AppleTreeDropDefaultTimeSpan) //循环，直到不满足( 苹果数量<(升级次数+1) and (当前UTC时间 - 上次产生苹果时间)>=苹果默认掉落时间间隔 )，这两项都是苹果树是否应该产生苹果的判断的核心条件，一条是苹果树是否有空余空间，一条是现在距离上次产生苹果是否已过去了产出苹果该有的时间差
 			{
-				appleCollected++;
-				lastDropTime += AppleTreeDropDefaultTimeSpan;
+				appleCollected++; //苹果数量+1
+				lastDropTime += AppleTreeDropDefaultTimeSpan; //将上次掉落苹果的时间(DateTime)增加一份掉落苹果的标准时间间隔(TimeSpan)
 			}
-			result["AppleCollected"] = appleCollected;
-			result["LastTimeGotApple"] = lastDropTime.ToBinary().ToString();
-			return result;
+			result["AppleCollected"] = appleCollected; //将苹果数量存回result
+			result["LastTimeGotApple"] = lastDropTime.ToBinary().ToString(); //将上次掉落苹果的时间(DateTime)序列化后存回result
+			return result; //返回result
 		}
 		internal static Dictionary<string, object> UpdateStore(Dictionary<string, object> storeData, bool forceRestock = false) //传入整个商店的数据，返回更新至当前时间的商店
 		{

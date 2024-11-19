@@ -201,6 +201,14 @@ Tree</value>
     Set custom save path.
     &lt;path&gt;: An absolute path to an existing directory.</value>
   </data>
+  <data name="en_cmd_help_show_sell" xml:space="preserve">
+    <value>Command "SWAP":
+  SELL
+    Sell the item in the handing slot.
+  SELL &lt;index&gt;
+    Sell the item sellable at the specified slot of the current page of the current scene by index.
+    &lt;index&gt;: Index number.</value>
+  </data>
   <data name="en_cmd_help_show_swap" xml:space="preserve">
     <value>Command "SWAP"(S):
   SWAP
@@ -355,9 +363,26 @@ Tree</value>
   <data name="en_cmd_sell_not_a_number" xml:space="preserve">
     <value>The input parameters are not a number.</value>
   </data>
+  <data name="en_cmd_sell_no_apple_in_tree" xml:space="preserve">
+    <value>AppleTree is empty.</value>
+  </data>
+  <data name="en_cmd_sell_scene_can_only_sell_hand" xml:space="preserve">
+    <value>This command during current scene is only supported to sell items in handing slot.</value>
+  </data>
+  <data name="en_cmd_sell_slot_empty" xml:space="preserve">
+    <value>The slot of index "{0}" is empty.</value>
+    <comment>0=格子索引</comment>
+  </data>
   <data name="en_cmd_sell_success" xml:space="preserve">
     <value>Earned {0}.</value>
     <comment>0=金钱</comment>
+  </data>
+  <data name="en_cmd_sell_target_cannot_sell" xml:space="preserve">
+    <value>Cannot sell slot "{0}".</value>
+    <comment>0=格子索引</comment>
+  </data>
+  <data name="en_cmd_sell_tree_can_only_sell_index_zero" xml:space="preserve">
+    <value>This command during scene AppleTree is only supported to use index number "0".</value>
   </data>
   <data name="en_cmd_swap_garden_not_flower" xml:space="preserve">
     <value>The slots of Garden can only be empty or placed with flowers.</value>
@@ -700,6 +725,14 @@ Tree    苹果树，会自动产出用于卖钱的苹果</value>
     设定自定义存档保存路径.
     &lt;path&gt;: 一个指向已存在目录的绝对路径.</value>
   </data>
+  <data name="zh_cmd_help_show_sell" xml:space="preserve">
+    <value>命令"SELL":
+  SELL
+    出售手持槽中的物品.
+  SELL &lt;index&gt;
+    出售当前场景的当前页面上由索引指定的格子中可出售的物品.
+    &lt;index&gt;: 索引序号.</value>
+  </data>
   <data name="zh_cmd_help_show_swap" xml:space="preserve">
     <value>命令"SWAP"(S):
   SWAP
@@ -855,9 +888,26 @@ Tree    -  苹果树，会自动产出用于卖钱的苹果</value>
   <data name="zh_cmd_sell_not_a_number" xml:space="preserve">
     <value>输入的参数不是数字.</value>
   </data>
+  <data name="zh_cmd_sell_no_apple_in_tree" xml:space="preserve">
+    <value>苹果树为空.</value>
+  </data>
+  <data name="zh_cmd_sell_scene_can_only_sell_hand" xml:space="preserve">
+    <value>在当前场景中此命令只支持出售手持槽中的物品.</value>
+  </data>
+  <data name="zh_cmd_sell_slot_empty" xml:space="preserve">
+    <value>索引"{0}"格子是空的.</value>
+    <comment>0=格子索引</comment>
+  </data>
   <data name="zh_cmd_sell_success" xml:space="preserve">
     <value>已赚取{0}块钱.</value>
     <comment>0=金钱</comment>
+  </data>
+  <data name="zh_cmd_sell_target_cannot_sell" xml:space="preserve">
+    <value>格子"{0}"不可出售.</value>
+    <comment>0=格子索引</comment>
+  </data>
+  <data name="zh_cmd_sell_tree_can_only_sell_index_zero" xml:space="preserve">
+    <value>此命令在苹果树场景中使用时只支持索引"0"格子.</value>
   </data>
   <data name="zh_cmd_swap_garden_not_flower" xml:space="preserve">
     <value>花园场景的格子只能留空或摆放花朵.</value>

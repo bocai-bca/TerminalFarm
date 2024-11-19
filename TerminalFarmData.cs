@@ -329,7 +329,7 @@ namespace TerminalFarm
 						CanSwap = true, //物品作为农场格子时是否允许被swap至缓存
 						CanUse = false, //物品作为缓存格子时是否允许被use进农田
 						NextStateID = 9, //物品下一个生长阶段的ID，如果没有下一个生长阶段就填自身
-						SwapToID = 0, //进行swap后本格变成什么
+						SwapToID = 8, //进行swap后本格变成什么
 						GrowTime = TimeSpan.MaxValue //物品从本阶段开始生长到下一个阶段所需的时间
 					},
 					MarketItemProperties = new MarketItemProperties
@@ -697,7 +697,7 @@ namespace TerminalFarm
 						CanSwap = true, //物品作为农场格子时是否允许被swap至缓存
 						CanUse = false, //物品作为缓存格子时是否允许被use进农田
 						NextStateID = 23, //物品下一个生长阶段的ID，如果没有下一个生长阶段就填自身
-						SwapToID = 0, //进行swap后本格变成什么
+						SwapToID = 22, //进行swap后本格变成什么
 						GrowTime = TimeSpan.MaxValue //物品从本阶段开始生长到下一个阶段所需的时间
 					},
 					MarketItemProperties = new MarketItemProperties
@@ -789,7 +789,7 @@ namespace TerminalFarm
 						CanSwap = true, //物品作为农场格子时是否允许被swap至缓存
 						CanUse = false, //物品作为缓存格子时是否允许被use进农田
 						NextStateID = 27, //物品下一个生长阶段的ID，如果没有下一个生长阶段就填自身
-						SwapToID = 0, //进行swap后本格变成什么
+						SwapToID = 26, //进行swap后本格变成什么
 						GrowTime = TimeSpan.MaxValue //物品从本阶段开始生长到下一个阶段所需的时间
 					},
 					MarketItemProperties = new MarketItemProperties

@@ -7,7 +7,9 @@
 		{
 			"UpgradedTimes": 0,
 			"Slots": [
-				{},
+				{
+					"ItemID": 0
+				},
 				{},
 				{},
 				{},
@@ -18,7 +20,12 @@
 		{
 			"UpgradedTimes": 0,
 			"Slots": [
-				{},
+				{
+					"ItemID": 0,
+					"LastWaterTime": "",
+					"LastUpdateTime": "",
+					"HadWaterTime": ""
+				},
 				{},
 				{},
 				{},
@@ -30,7 +37,10 @@
 			"UpgradedTimes": 0,
 			"LastUpdateTime": "",
 			"Slots": [
-				{},
+				{
+					"ItemID": 0,
+					"Price": 0
+				},
 				{},
 				{},
 				{},
@@ -40,7 +50,9 @@
 		{
 			"UpgradedTimes": 0,
 			"Slots": [
-				{},
+				{
+					"ItemID": 0
+				},
 				{},
 				{},
 				{},
