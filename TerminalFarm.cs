@@ -248,10 +248,11 @@ namespace TerminalFarm
 								case "SAVE":
 									PrintMessage(translator.Translate("cmd_help_show_save"), PrintMessageLevel.Info);
 									break;
+								case "SL":
 								case "SELL":
 									PrintMessage(translator.Translate("cmd_help_show_sell"), PrintMessageLevel.Info);
 									break;
-								case "S":
+								case "SP":
 								case "SWAP":
 									PrintMessage(translator.Translate("cmd_help_show_swap"), PrintMessageLevel.Info);
 									break;
