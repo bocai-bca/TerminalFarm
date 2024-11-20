@@ -31,6 +31,7 @@ namespace TerminalFarm
 		internal static int CurrentScene = 0;
 		internal static int CurrentPage = 0;
 		internal static bool IsDebuging = false;
+		internal static bool IsDontSave = false; //使用DONTSAVE命令开启，此设定仅存在于内存中，开启后将无论如何都不会向硬盘写入存档，只会在打开游戏时读取一次
 		internal static Dictionary<string, object>? MemoryGameData = GameDataInit();
 		internal static Random mainRandom = new(); //主随机数
 		internal static string MemoryCustomPath = "";
@@ -167,7 +168,12 @@ namespace TerminalFarm
 					Thread.Sleep(3000);
 				}
 				//显示输入提示箭头
-				Console.Write("\n\n[");
+				Console.Write("\n\n");
+				if (IsDontSave)
+				{
+					Console.Write(translator.Translate("save_disabling_warn"));
+				}
+				Console.Write("[");
 				if (MemoryGameData != null)
 				{
 					int takingItemID = (int)MemoryGameData["TakingItemID"];
@@ -191,6 +197,10 @@ namespace TerminalFarm
 					case "DEBUG":
 						IsDebuging = !IsDebuging;
 						Console.WriteLine(IsDebuging.ToString());
+						break;
+					case "DONTSAVE": //DONTSAVE命令
+						IsDontSave = true;
+						PrintMessage(translator.Translate("cmd_dontsave_on"), PrintMessageLevel.Info);
 						break;
 					case "CLS":
 					case "CLEAR": //CLEAR命令
@@ -255,6 +265,9 @@ namespace TerminalFarm
 								case "U":
 								case "USE":
 									PrintMessage(translator.Translate("cmd_help_show_use"), PrintMessageLevel.Info);
+									break;
+								case "DONTSAVE":
+									PrintMessage(translator.Translate("cmd_help_show_dontsave"), PrintMessageLevel.Info);
 									break;
 								default: //未知参数
 									PrintMessage(String.Format(translator.Translate("cmd_help_unknown_arg"), arg), PrintMessageLevel.Info);
@@ -765,7 +778,7 @@ namespace TerminalFarm
 						}
 						PrintMessage(String.Format(translator.Translate("cmd_page_text_pages"), CurrentPage + 1, GetPagesCount(CurrentScene, (int)((Dictionary<string, object>)((List<object>)MemoryGameData["ScenesData"])[CurrentScene])["UpgradedTimes"])), PrintMessageLevel.Info);
 						break;
-					case "S":
+					case "SP":
 					case "SWAP": //SWAP命令
 						if (MemoryGameData == null)
 						{
@@ -1312,6 +1325,7 @@ namespace TerminalFarm
 						}
 						PrintMessage(String.Format(translator.Translate("cmd_upgrade_success"), translator.Translate("scene_name_" + SceneData[CurrentScene]["SceneName"])), PrintMessageLevel.Info);
 						break;
+					case "SL":
 					case "SELL": //SELL命令
 						if (MemoryGameData == null)
 						{
@@ -1342,6 +1356,7 @@ namespace TerminalFarm
 										if (!(0 <= argIndex && argIndex <= 5))
 										{
 											PrintMessage(translator.Translate("cmd_sell_index_out_of_bound"), PrintMessageLevel.Warning);
+											break; //退出场景switch
 										}
 										int price = 0;
 										try
@@ -1351,7 +1366,7 @@ namespace TerminalFarm
 											int targetItemID = (int)targetItem["ItemID"]; //获取对应格子数据的物品id
 											if (targetItemID == 0) //如果指定的格子是空的
 											{
-												PrintMessage(translator.Translate("cmd_sell_slot_empty"), PrintMessageLevel.Warning); //报空格子警告
+												PrintMessage(String.Format(translator.Translate("cmd_sell_slot_empty"), targetIndex), PrintMessageLevel.Warning); //报空格子警告
 												break; //退出场景switch
 											}
 											ItemProperties itemProperties = ItemsProperties[targetItemID];
@@ -1360,7 +1375,14 @@ namespace TerminalFarm
 												PrintMessage(String.Format(translator.Translate("cmd_sell_target_cannot_sell"), targetIndex), PrintMessageLevel.Warning); //报农田格子作物不可出售警告
 												break; //退出场景switch
 											}
-											targetItem["ItemID"] = 0; //将对应格子数据的物品id设为空
+											if (CurrentScene == 1) //如果当前场景是农田
+											{
+												targetItem["ItemID"] = ItemsProperties[targetItemID].FarmSlotProperties.SwapToID; //将对应格子数据的物品id设为作物被收获后留下的id
+											}
+											else
+											{
+												targetItem["ItemID"] = 0; //将对应格子数据的物品id设为空
+											}
 											price = StoreItemsIDPage1.Contains(targetItemID) ? 0 : itemProperties.MarketItemProperties.NowPrice; //如果目标是种子就为0钱，否则获取目标的价格
 											int money = (int)MemoryGameData["Money"] + price; //获取内存存档的资金，并加上price
 											MemoryGameData["Money"] = money; //将money存回内存存档的资金
@@ -1372,6 +1394,7 @@ namespace TerminalFarm
 										}
 										if (isSuccess)
 										{
+											needGotoPage = true;
 											shouldSave = true;
 											PrintMessage(String.Format(translator.Translate("cmd_sell_success"), price), PrintMessageLevel.Info);
 										}
@@ -1470,7 +1493,7 @@ namespace TerminalFarm
 					continue;
 				}
 				//每个主循环结束时的保存环节
-				if (!shouldSave)
+				if (!shouldSave || IsDontSave)
 				{
 					continue;
 				}

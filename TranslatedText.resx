@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="en_cmd_dontsave_on" xml:space="preserve">
+    <value>Disable saving is on. Now the game won't save game save to disk, restart the game to turn this function off.</value>
+  </data>
   <data name="en_cmd_exit" xml:space="preserve">
     <value>Exiting...</value>
   </data>
@@ -139,6 +142,11 @@ Tree</value>
     <value>Command "CLEAR"(CLS):
   CLEAR
     Clear screen.</value>
+  </data>
+  <data name="en_cmd_help_show_dontsave" xml:space="preserve">
+    <value>Command "DONTSAVE":
+  DONTSAVE
+    Turn on the debug function that disable saving. When it is on, the game will be a state like sandbox. The game will always doesn't save game save to disk from memory ever player do anything. Restart the game to turn this function off.</value>
   </data>
   <data name="en_cmd_help_show_exit" xml:space="preserve">
     <value>Command "EXIT":
@@ -202,7 +210,7 @@ Tree</value>
     &lt;path&gt;: An absolute path to an existing directory.</value>
   </data>
   <data name="en_cmd_help_show_sell" xml:space="preserve">
-    <value>Command "SWAP":
+    <value>Command "SELL"(SL):
   SELL
     Sell the item in the handing slot.
   SELL &lt;index&gt;
@@ -210,7 +218,7 @@ Tree</value>
     &lt;index&gt;: Index number.</value>
   </data>
   <data name="en_cmd_help_show_swap" xml:space="preserve">
-    <value>Command "SWAP"(S):
+    <value>Command "SWAP"(SP):
   SWAP
     Switch items without index number at the market and apple tree scenes.
   SWAP &lt;index&gt;
@@ -259,6 +267,7 @@ UPGRADES</value>
   <data name="en_cmd_list_show_cmds" xml:space="preserve">
     <value>Commands list:
 CLEAR
+DONTSAVE    -  (FOR DEBUG)Disable the game saving
 EXIT
 GOTO
 HELP
@@ -614,6 +623,9 @@ Tree</value>
   <data name="en_market_tomorrow_text" xml:space="preserve">
     <value>  NextDay </value>
   </data>
+  <data name="en_save_disabling_warn" xml:space="preserve">
+    <value>SaveDisabling</value>
+  </data>
   <data name="en_scene_name_farm" xml:space="preserve">
     <value>Farm</value>
   </data>
@@ -641,6 +653,9 @@ Tree</value>
 Type and send "HELP" to get start.</value>
     <comment>0=BV版本号</comment>
   </data>
+  <data name="zh_cmd_dontsave_on" xml:space="preserve">
+    <value>已开启禁用保存，现在在游戏内无论进行何种操作，游戏都不会将内存中的存档保存到硬盘，关闭此功能需要重启游戏.</value>
+  </data>
   <data name="zh_cmd_exit" xml:space="preserve">
     <value>正在退出...</value>
   </data>
@@ -663,6 +678,11 @@ Tree    苹果树，会自动产出用于卖钱的苹果</value>
     <value>命令"CLEAR"(CLS):
   CLEAR
     清空屏幕.</value>
+  </data>
+  <data name="zh_cmd_help_show_dontsave" xml:space="preserve">
+    <value>命令"DONTSAVE":
+  DONTSAVE
+    开启禁用保存的调试功能，开启后游戏将处于近似沙盒的状态，无论玩家如何操作，游戏都不会将内存中的存档保存到硬盘，关闭此功能需要重启游戏.</value>
   </data>
   <data name="zh_cmd_help_show_exit" xml:space="preserve">
     <value>命令"EXIT":
@@ -726,7 +746,7 @@ Tree    苹果树，会自动产出用于卖钱的苹果</value>
     &lt;path&gt;: 一个指向已存在目录的绝对路径.</value>
   </data>
   <data name="zh_cmd_help_show_sell" xml:space="preserve">
-    <value>命令"SELL":
+    <value>命令"SELL"(SL):
   SELL
     出售手持槽中的物品.
   SELL &lt;index&gt;
@@ -734,7 +754,7 @@ Tree    苹果树，会自动产出用于卖钱的苹果</value>
     &lt;index&gt;: 索引序号.</value>
   </data>
   <data name="zh_cmd_help_show_swap" xml:space="preserve">
-    <value>命令"SWAP"(S):
+    <value>命令"SWAP"(SP):
   SWAP
     在市场和苹果树场景中不使用索引数交换物品.
   SWAP &lt;index&gt;
@@ -783,6 +803,7 @@ UPGRADES</value>
   <data name="zh_cmd_list_show_cmds" xml:space="preserve">
     <value>命令列表:
 CLEAR    -  清空控制台屏幕
+DONTSAVE    -  (测试专用)禁用存档保存
 EXIT    -  退出游戏
 GOTO    -  前往特定场景
 HELP    -  显示帮助或命令信息
@@ -1139,6 +1160,9 @@ Tree    -  苹果树，会自动产出用于卖钱的苹果</value>
   </data>
   <data name="zh_market_tomorrow_text" xml:space="preserve">
     <value>  明日 </value>
+  </data>
+  <data name="zh_save_disabling_warn" xml:space="preserve">
+    <value>保存禁用</value>
   </data>
   <data name="zh_scene_name_farm" xml:space="preserve">
     <value>农田</value>
